@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:w="http://example.com/application/server/model"
+           version="1.0"
+           targetNamespace="http://example.com/application/server/model">
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0"/>
+            <xs:element name="job" type="w:jobEnum" minOccurs="0"/>
+            <xs:element name="role" type="w:roleEnum" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+            <xs:element name="surname" type="xs:string" minOccurs="0"/>
+            <xs:element name="username" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="roleEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ADMIN"/>
+            <xs:enumeration value="USER"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="jobEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SENIOR_BAILIFF"/>
+            <xs:enumeration value="BAILIFF"/>
+            <xs:enumeration value="CLERK"/>
+            <xs:enumeration value="HEAD_OF_ARCHIVES"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="saveUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="w:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="saveUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="w:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="w:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserByUsernameRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserByUsernameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="w:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUsersRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getUsersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="users" type="w:user" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="process">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0"/>
+            <xs:element name="production" type="w:production" minOccurs="0"/>
+            <xs:element name="debtor" type="w:debtor" minOccurs="0"/>
+            <xs:element name="foreClosure" type="w:foreClosure" minOccurs="0"/>
+            <xs:element name="user" type="w:user"/>
+            <xs:element name="result" type="xs:string" minOccurs="0"/>
+            <xs:element name="dateOfEndOfProduction" type="xs:string" minOccurs="0"/>
+            <xs:element name="termOfExecutionOfTheLaw" type="xs:string" minOccurs="0"/>
+            <xs:element name="termOfVoluntaryCompliance" type="xs:string" minOccurs="0"/>
+            <xs:element name="deliveryDateArchive" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="debtor">
+        <xs:sequence>
+            <xs:element name="address" type="w:address" minOccurs="0"/>
+            <xs:element name="addressPlaceOfWork" type="xs:string" minOccurs="0"/>
+            <xs:element name="citizenship" type="xs:string" minOccurs="0"/>
+            <xs:element name="dateOfBirth" type="xs:string" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="identificationDocument" type="w:identificationDocument" minOccurs="0"/>
+            <xs:element name="identificationNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="placeOfWork" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="address">
+        <xs:sequence>
+            <xs:element name="city" type="xs:string" minOccurs="0"/>
+            <xs:element name="country" type="xs:string" minOccurs="0"/>
+            <xs:element name="field" type="xs:string" minOccurs="0"/>
+            <xs:element name="flat" type="xs:string" minOccurs="0"/>
+            <xs:element name="house" type="xs:string" minOccurs="0"/>
+            <xs:element name="housing" type="xs:string" minOccurs="0"/>
+            <xs:element name="street" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="identificationDocument">
+        <xs:sequence>
+            <xs:element name="type" type="w:identificationDocumentTypeEnum" minOccurs="0"/>
+            <xs:element name="date" type="xs:string" minOccurs="0"/>
+            <xs:element name="number" type="xs:string" minOccurs="0"/>
+            <xs:element name="series" type="xs:string" minOccurs="0"/>
+            <xs:element name="issuedBy" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="foreClosure">
+        <xs:sequence>
+            <xs:element name="amountAll" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="amountToBeCollected" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="creditor" type="xs:string" minOccurs="0"/>
+            <xs:element name="subType" type="w:foreClosureSubType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="foreClosureType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="subtypes" type="w:foreClosureSubType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="foreClosureSubType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="type" type="w:foreClosureType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="production">
+        <xs:sequence>
+            <xs:element name="documentNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="issuedBy" type="xs:string" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="type" type="w:documentTypeEnum" minOccurs="0"/>
+            <xs:element name="addedDate" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="identificationDocumentTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PASSPORT"/>
+            <xs:enumeration value="RESIDENCE"/>
+            <xs:enumeration value="REFUGEE_CERTIFICATE"/>
+            <xs:enumeration value="OTHER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="documentTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="RESOLUTION"/>
+            <xs:enumeration value="RECEIVING_ORDER"/>
+            <xs:enumeration value="DETERMINATION"/>
+            <xs:enumeration value="OTHER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="saveProcessRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="process" type="w:process"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="saveProcessResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateProcessRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="process" type="w:process"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateProcessResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteProcessRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="processId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteProcessResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getProcessByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="processId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getProcessByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="process" type="w:process"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getProcessesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getProcessesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="processes" type="w:process" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getForeClosureTypesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getForeClosureTypesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="types" type="w:foreClosureType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+

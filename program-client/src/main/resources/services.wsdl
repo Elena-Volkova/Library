@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://example.com/application/server/model"
+                  targetNamespace="http://example.com/application/server/model">
+    <wsdl:types>
+        <xs:schema xmlns:w="http://example.com/application/server/model" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   targetNamespace="http://example.com/application/server/model" version="1.0">
+            <xs:complexType name="user">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="job" type="w:jobEnum"/>
+                    <xs:element minOccurs="0" name="role" type="w:roleEnum"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="password" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surname" type="xs:string"/>
+                    <xs:element minOccurs="0" name="username" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="roleEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ADMIN"/>
+                    <xs:enumeration value="USER"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="jobEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SENIOR_BAILIFF"/>
+                    <xs:enumeration value="BAILIFF"/>
+                    <xs:enumeration value="CLERK"/>
+                    <xs:enumeration value="HEAD_OF_ARCHIVES"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="saveUserRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="user" type="w:user"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="saveUserResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateUserRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="user" type="w:user"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateUserResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteUserRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteUserResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUserByIdRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUserByIdResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="user" type="w:user"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUserByUsernameRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="username" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUserByUsernameResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="user" type="w:user"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUsersRequest">
+                <xs:complexType/>
+            </xs:element>
+            <xs:element name="getUsersResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="users" type="w:user"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:complexType name="process">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="production" type="w:production"/>
+                    <xs:element minOccurs="0" name="debtor" type="w:debtor"/>
+                    <xs:element minOccurs="0" name="foreClosure" type="w:foreClosure"/>
+                    <xs:element name="user" type="w:user"/>
+                    <xs:element minOccurs="0" name="result" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dateOfEndOfProduction" type="xs:string"/>
+                    <xs:element minOccurs="0" name="termOfExecutionOfTheLaw" type="xs:string"/>
+                    <xs:element minOccurs="0" name="termOfVoluntaryCompliance" type="xs:string"/>
+                    <xs:element minOccurs="0" name="deliveryDateArchive" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="debtor">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="address" type="w:address"/>
+                    <xs:element minOccurs="0" name="addressPlaceOfWork" type="xs:string"/>
+                    <xs:element minOccurs="0" name="citizenship" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dateOfBirth" type="xs:string"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="identificationDocument" type="w:identificationDocument"/>
+                    <xs:element minOccurs="0" name="identificationNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" name="placeOfWork" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="city" type="xs:string"/>
+                    <xs:element minOccurs="0" name="country" type="xs:string"/>
+                    <xs:element minOccurs="0" name="field" type="xs:string"/>
+                    <xs:element minOccurs="0" name="flat" type="xs:string"/>
+                    <xs:element minOccurs="0" name="house" type="xs:string"/>
+                    <xs:element minOccurs="0" name="housing" type="xs:string"/>
+                    <xs:element minOccurs="0" name="street" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="identificationDocument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="type" type="w:identificationDocumentTypeEnum"/>
+                    <xs:element minOccurs="0" name="date" type="xs:string"/>
+                    <xs:element minOccurs="0" name="number" type="xs:string"/>
+                    <xs:element minOccurs="0" name="series" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issuedBy" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="foreClosure">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="amountAll" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amountToBeCollected" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="creditor" type="xs:string"/>
+                    <xs:element minOccurs="0" name="subType" type="w:foreClosureSubType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="foreClosureType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" name="subtypes" type="w:foreClosureSubType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="foreClosureSubType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="type" type="w:foreClosureType"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="production">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="documentNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issuedBy" type="xs:string"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="type" type="w:documentTypeEnum"/>
+                    <xs:element minOccurs="0" name="addedDate" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="identificationDocumentTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="PASSPORT"/>
+                    <xs:enumeration value="RESIDENCE"/>
+                    <xs:enumeration value="REFUGEE_CERTIFICATE"/>
+                    <xs:enumeration value="OTHER"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="documentTypeEnum">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="RESOLUTION"/>
+                    <xs:enumeration value="RECEIVING_ORDER"/>
+                    <xs:enumeration value="DETERMINATION"/>
+                    <xs:enumeration value="OTHER"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:element name="saveProcessRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process" type="w:process"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="saveProcessResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateProcessRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process" type="w:process"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateProcessResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteProcessRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="processId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="deleteProcessResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="result" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getProcessByIdRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="processId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getProcessByIdResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="process" type="w:process"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getProcessesRequest">
+                <xs:complexType/>
+            </xs:element>
+            <xs:element name="getProcessesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="processes" type="w:process"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getForeClosureTypesRequest">
+                <xs:complexType/>
+            </xs:element>
+            <xs:element name="getForeClosureTypesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="types" type="w:foreClosureType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="updateProcessRequest">
+        <wsdl:part element="tns:updateProcessRequest" name="updateProcessRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUserByIdResponse">
+        <wsdl:part element="tns:getUserByIdResponse" name="getUserByIdResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProcessByIdRequest">
+        <wsdl:part element="tns:getProcessByIdRequest" name="getProcessByIdRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUsersRequest">
+        <wsdl:part element="tns:getUsersRequest" name="getUsersRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="saveProcessRequest">
+        <wsdl:part element="tns:saveProcessRequest" name="saveProcessRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteProcessRequest">
+        <wsdl:part element="tns:deleteProcessRequest" name="deleteProcessRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getForeClosureTypesRequest">
+        <wsdl:part element="tns:getForeClosureTypesRequest" name="getForeClosureTypesRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateProcessResponse">
+        <wsdl:part element="tns:updateProcessResponse" name="updateProcessResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteProcessResponse">
+        <wsdl:part element="tns:deleteProcessResponse" name="deleteProcessResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProcessesResponse">
+        <wsdl:part element="tns:getProcessesResponse" name="getProcessesResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUserByUsernameRequest">
+        <wsdl:part element="tns:getUserByUsernameRequest" name="getUserByUsernameRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteUserResponse">
+        <wsdl:part element="tns:deleteUserResponse" name="deleteUserResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="saveUserResponse">
+        <wsdl:part element="tns:saveUserResponse" name="saveUserResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUserByUsernameResponse">
+        <wsdl:part element="tns:getUserByUsernameResponse" name="getUserByUsernameResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteUserRequest">
+        <wsdl:part element="tns:deleteUserRequest" name="deleteUserRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUserByIdRequest">
+        <wsdl:part element="tns:getUserByIdRequest" name="getUserByIdRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="saveProcessResponse">
+        <wsdl:part element="tns:saveProcessResponse" name="saveProcessResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProcessesRequest">
+        <wsdl:part element="tns:getProcessesRequest" name="getProcessesRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="saveUserRequest">
+        <wsdl:part element="tns:saveUserRequest" name="saveUserRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getForeClosureTypesResponse">
+        <wsdl:part element="tns:getForeClosureTypesResponse" name="getForeClosureTypesResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProcessByIdResponse">
+        <wsdl:part element="tns:getProcessByIdResponse" name="getProcessByIdResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUsersResponse">
+        <wsdl:part element="tns:getUsersResponse" name="getUsersResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateUserRequest">
+        <wsdl:part element="tns:updateUserRequest" name="updateUserRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateUserResponse">
+        <wsdl:part element="tns:updateUserResponse" name="updateUserResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ServicesPort">
+        <wsdl:operation name="updateProcess">
+            <wsdl:input message="tns:updateProcessRequest" name="updateProcessRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:updateProcessResponse" name="updateProcessResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserById">
+            <wsdl:input message="tns:getUserByIdRequest" name="getUserByIdRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getUserByIdResponse" name="getUserByIdResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProcessById">
+            <wsdl:input message="tns:getProcessByIdRequest" name="getProcessByIdRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getProcessByIdResponse" name="getProcessByIdResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUsers">
+            <wsdl:input message="tns:getUsersRequest" name="getUsersRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getUsersResponse" name="getUsersResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveProcess">
+            <wsdl:input message="tns:saveProcessRequest" name="saveProcessRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:saveProcessResponse" name="saveProcessResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteProcess">
+            <wsdl:input message="tns:deleteProcessRequest" name="deleteProcessRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:deleteProcessResponse" name="deleteProcessResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getForeClosureTypes">
+            <wsdl:input message="tns:getForeClosureTypesRequest" name="getForeClosureTypesRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getForeClosureTypesResponse" name="getForeClosureTypesResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProcesses">
+            <wsdl:input message="tns:getProcessesRequest" name="getProcessesRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getProcessesResponse" name="getProcessesResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserByUsername">
+            <wsdl:input message="tns:getUserByUsernameRequest" name="getUserByUsernameRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getUserByUsernameResponse" name="getUserByUsernameResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <wsdl:input message="tns:deleteUserRequest" name="deleteUserRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:deleteUserResponse" name="deleteUserResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveUser">
+            <wsdl:input message="tns:saveUserRequest" name="saveUserRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:saveUserResponse" name="saveUserResponse">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateUser">
+            <wsdl:input message="tns:updateUserRequest" name="updateUserRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:updateUserResponse" name="updateUserResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServicesPortSoap11" type="tns:ServicesPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="updateProcess">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="updateProcessRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateProcessResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserById">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getUserByIdRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getUserByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProcessById">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getProcessByIdRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getProcessByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUsers">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getUsersRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getUsersResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveProcess">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="saveProcessRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="saveProcessResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteProcess">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="deleteProcessRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteProcessResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getForeClosureTypes">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getForeClosureTypesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getForeClosureTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getProcesses">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getProcessesRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getProcessesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUserByUsername">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getUserByUsernameRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getUserByUsernameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deleteUser">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="deleteUserRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteUserResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saveUser">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="saveUserRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="saveUserResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="updateUser">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="updateUserRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateUserResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ServicesPortService">
+        <wsdl:port binding="tns:ServicesPortSoap11" name="ServicesPortSoap11">
+            <soap:address location="http://localhost:8080/server/ws/services"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
