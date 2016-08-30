@@ -44,16 +44,16 @@ public class BookDB {
     }
 
     private BookDB(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-        author = builder.author;
-        publisher = builder.publisher;
-        publishYear = builder.publishYear;
-        pages = builder.pages;
-        receiptDate = builder.receiptDate;
-        availability = builder.availability;
-        library = builder.library;
-        userCard = builder.userCard;
+        setId(builder.id);
+        setName(builder.name);
+        setAuthor(builder.author);
+        setPublisher(builder.publisher);
+        setPublishYear(builder.publishYear);
+        setPages(builder.pages);
+        setReceiptDate(builder.receiptDate);
+        setAvailability(builder.availability);
+        setLibrary(builder.library);
+        setUserCard(builder.userCard);
     }
 
     public static Builder newBuilder() {
@@ -64,40 +64,80 @@ public class BookDB {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAuthor() {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getPublisher() {
         return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public Integer getPublishYear() {
         return publishYear;
     }
 
+    public void setPublishYear(Integer publishYear) {
+        this.publishYear = publishYear;
+    }
+
     public Integer getPages() {
         return pages;
+    }
+
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 
     public Date getReceiptDate() {
         return receiptDate;
     }
 
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
+    }
+
     public boolean isAvailability() {
         return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
     }
 
     public LibraryDB getLibrary() {
         return library;
     }
 
+    public void setLibrary(LibraryDB library) {
+        this.library = library;
+    }
+
     public UserCardDB getUserCard() {
         return userCard;
+    }
+
+    public void setUserCard(UserCardDB userCard) {
+        this.userCard = userCard;
     }
 
     public static final class Builder {

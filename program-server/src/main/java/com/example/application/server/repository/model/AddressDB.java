@@ -40,13 +40,13 @@ public class AddressDB {
     }
 
     private AddressDB(Builder builder) {
-        id = builder.id;
-        country = builder.country;
-        city = builder.city;
-        street = builder.street;
-        phone = builder.phone;
-        library = builder.library;
-        user = builder.user;
+        setId(builder.id);
+        setCountry(builder.country);
+        setCity(builder.city);
+        setStreet(builder.street);
+        setPhone(builder.phone);
+        setLibrary(builder.library);
+        setUser(builder.user);
     }
 
     public static Builder newBuilder() {
@@ -57,28 +57,56 @@ public class AddressDB {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getCountry() {
         return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getCity() {
         return city;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getStreet() {
         return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public LibraryDB getLibrary() {
         return library;
     }
 
+    public void setLibrary(LibraryDB library) {
+        this.library = library;
+    }
+
     public UserDB getUser() {
         return user;
+    }
+
+    public void setUser(UserDB user) {
+        this.user = user;
     }
 
     public static final class Builder {

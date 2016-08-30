@@ -40,12 +40,12 @@ public class UserCardDB {
     }
 
     private UserCardDB(Builder builder) {
-        id = builder.id;
-        dateFrom = builder.dateFrom;
-        dateTo = builder.dateTo;
-        returned = builder.returned;
-        user = builder.user;
-        book = builder.book;
+        setId(builder.id);
+        setDateFrom(builder.dateFrom);
+        setDateTo(builder.dateTo);
+        setReturned(builder.returned);
+        setUser(builder.user);
+        setBook(builder.book);
     }
 
     public static Builder newBuilder() {
@@ -56,24 +56,48 @@ public class UserCardDB {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Date getDateFrom() {
         return dateFrom;
+    }
+
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
     }
 
     public Date getDateTo() {
         return dateTo;
     }
 
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
+    }
+
     public Boolean getReturned() {
         return returned;
+    }
+
+    public void setReturned(Boolean returned) {
+        this.returned = returned;
     }
 
     public UserDB getUser() {
         return user;
     }
 
+    public void setUser(UserDB user) {
+        this.user = user;
+    }
+
     public BookDB getBook() {
         return book;
+    }
+
+    public void setBook(BookDB book) {
+        this.book = book;
     }
 
     public static final class Builder {

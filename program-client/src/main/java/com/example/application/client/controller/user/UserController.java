@@ -1,4 +1,4 @@
-package com.example.application.client.controller;
+package com.example.application.client.controller.user;
 
 import com.example.application.client.service.UserService;
 import com.example.application.client.service.model.Search;

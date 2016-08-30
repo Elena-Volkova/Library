@@ -10,8 +10,11 @@ import com.example.application.server.model.action.SaveLibraryRequest;
 import com.example.application.server.model.action.SaveLibraryResponse;
 import com.example.application.server.model.action.UpdateLibraryRequest;
 import com.example.application.server.model.action.UpdateLibraryResponse;
+import com.example.application.server.repository.AddressDao;
 import com.example.application.server.repository.LibraryDao;
+import com.example.application.server.repository.model.AddressDB;
 import com.example.application.server.repository.model.LibraryDB;
+import com.example.application.server.util.AddressBuilderUtil;
 import com.example.application.server.util.LibraryBuilderUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +35,19 @@ public class LibraryEndpoint {
     @Autowired
     private LibraryDao libraryDao;
 
+    @Autowired
+    private AddressDao addressDao;
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "saveLibraryRequest")
     @ResponsePayload
     @Transactional
     public SaveLibraryResponse saveLibraryRequest(@RequestPayload SaveLibraryRequest request) {
         SaveLibraryResponse response = new SaveLibraryResponse();
-        libraryDao.saveLibrary(
-                LibraryBuilderUtil.convertLibraryToLibraryDB(request.getLibrary())
-        );
+        AddressDB address = AddressBuilderUtil.convertAddressToAddressDB(request.getLibrary().getAddress());
+        addressDao.saveAddress(address);
+        LibraryDB library = LibraryBuilderUtil.convertLibraryToLibraryDB(request.getLibrary());
+        library.setAddress(address);
+        libraryDao.saveLibrary(library);
         response.setResult(Boolean.TRUE);
         return response;
     }
@@ -49,9 +57,10 @@ public class LibraryEndpoint {
     @Transactional
     public UpdateLibraryResponse updateLibraryRequest(@RequestPayload UpdateLibraryRequest request) {
         UpdateLibraryResponse response = new UpdateLibraryResponse();
-        libraryDao.updateLibrary(
-                LibraryBuilderUtil.convertLibraryToLibraryDB(request.getLibrary())
-        );
+        AddressDB address = AddressBuilderUtil.convertAddressToAddressDB(request.getLibrary().getAddress());
+        addressDao.updateAddress(address);
+        LibraryDB library = LibraryBuilderUtil.convertLibraryToLibraryDB(request.getLibrary());
+        libraryDao.updateLibrary(library);
         response.setResult(Boolean.TRUE);
         return response;
     }
@@ -61,9 +70,7 @@ public class LibraryEndpoint {
     @Transactional
     public DeleteLibraryResponse deleteLibraryRequest(@RequestPayload DeleteLibraryRequest request) {
         DeleteLibraryResponse response = new DeleteLibraryResponse();
-        libraryDao.deleteLibrary(
-                request.getLibraryId()
-        );
+        libraryDao.deleteLibrary(request.getLibraryId());
         response.setResult(Boolean.TRUE);
         return response;
     }
@@ -73,9 +80,7 @@ public class LibraryEndpoint {
     @Transactional
     public GetLibraryByIdResponse getLibraryByIdRequest(@RequestPayload GetLibraryByIdRequest request) {
         GetLibraryByIdResponse response = new GetLibraryByIdResponse();
-        LibraryDB library = libraryDao.findById(
-                request.getLibraryId()
-        );
+        LibraryDB library = libraryDao.findById(request.getLibraryId());
         response.setLibrary(LibraryBuilderUtil.convertLibraryDBToLibrary(library));
         return response;
     }

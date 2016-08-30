@@ -47,16 +47,16 @@ public class UserDB {
     }
 
     private UserDB(Builder builder) {
-        id = builder.id;
-        login = builder.login;
-        password = builder.password;
-        role = builder.role;
-        name = builder.name;
-        surname = builder.surname;
-        patronymic = builder.patronymic;
-        address = builder.address;
-        library = builder.library;
-        userCard = builder.userCard;
+        setId(builder.id);
+        setLogin(builder.login);
+        setPassword(builder.password);
+        setRole(builder.role);
+        setName(builder.name);
+        setSurname(builder.surname);
+        setPatronymic(builder.patronymic);
+        setAddress(builder.address);
+        setLibrary(builder.library);
+        setUserCard(builder.userCard);
     }
 
     public static Builder newBuilder() {
@@ -67,40 +67,80 @@ public class UserDB {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public RoleEnum getRole() {
         return role;
+    }
+
+    public void setRole(RoleEnum role) {
+        this.role = role;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPatronymic() {
         return patronymic;
     }
 
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
     public AddressDB getAddress() {
         return address;
+    }
+
+    public void setAddress(AddressDB address) {
+        this.address = address;
     }
 
     public LibraryDB getLibrary() {
         return library;
     }
 
+    public void setLibrary(LibraryDB library) {
+        this.library = library;
+    }
+
     public UserCardDB getUserCard() {
         return userCard;
+    }
+
+    public void setUserCard(UserCardDB userCard) {
+        this.userCard = userCard;
     }
 
     public static final class Builder {

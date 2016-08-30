@@ -1,11 +1,7 @@
-package com.example.application.client.controller;
+package com.example.application.client.controller.admin;
 
-import com.example.application.client.service.LibraryService;
 import com.example.application.client.service.UserService;
-import com.example.application.client.service.model.LibraryDTO;
-import com.example.application.client.service.model.RoleEnum;
 import com.example.application.client.service.model.UserDTO;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,19 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Admin Controller
- */
 @Controller
 public class AdminController {
 
-    private static final Logger LOGGER = Logger.getLogger(AdminController.class);
-
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private LibraryService libraryService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView adminPage(
@@ -63,53 +51,6 @@ public class AdminController {
         }
         model.addObject("users", userService.getUsers());
         model.setViewName("admin");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/libraries", method = RequestMethod.GET)
-    public ModelAndView getLibraries() {
-        ModelAndView model = new ModelAndView();
-        model.addObject("libraries", libraryService.getLibraries());
-        model.setViewName("get_libraries");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/library", method = RequestMethod.GET)
-    public ModelAndView addLibrary() {
-        ModelAndView model = new ModelAndView();
-        model.addObject("library", new LibraryDTO());
-        model.setViewName("add_library");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/library", method = RequestMethod.POST)
-    public ModelAndView addLibrary(@ModelAttribute LibraryDTO library) {
-        libraryService.add(library);
-        ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin?libraryAdd=true");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/library/{libraryId}", method = RequestMethod.GET)
-    public ModelAndView getLibrary(@PathVariable Long libraryId) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("update_library");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/library/{libraryId}", method = RequestMethod.PUT)
-    public ModelAndView updateLibrary(@PathVariable Long libraryId, @ModelAttribute LibraryDTO libraryDTO) {
-        libraryService.update(libraryDTO);
-        ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin?libraryUpdate=true");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/library/{libraryId}/delete", method = RequestMethod.GET)
-    public ModelAndView deleteLibrary(@PathVariable Long libraryId) {
-        ModelAndView model = new ModelAndView();
-        libraryService.delete(libraryId);
-        model.setViewName("redirect:/admin?libraryDelete=true");
         return model;
     }
 

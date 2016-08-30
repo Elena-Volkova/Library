@@ -73,6 +73,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
+                        <form:input path="id" type="hidden"/>
+                        <form:input path="address.id" type="hidden"/>
+
                         <div class="form-group">
                             <form:label path="name">Название библиотеки:</form:label>
                             <form:input path="name" required="true" cssClass="form-control"/>
@@ -103,7 +106,16 @@
                 <input type="hidden"
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-success">Добавить</button>
+                <button type="submit" class="btn btn-success">
+                    <c:choose>
+                        <c:when test="${empty library.id}">
+                            Добавить
+                        </c:when>
+                        <c:otherwise>
+                            Обновить
+                        </c:otherwise>
+                    </c:choose>
+                </button>
                 <button type="button" class="btn btn-btn-danger btn-large" data-toggle="modal"
                         data-target=".bs-example-modal-lg">Отменить
                 </button>

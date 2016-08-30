@@ -20,7 +20,7 @@ public class LibraryDB {
     private String name;
 
     @OneToOne
-    @JoinColumn(name = "address_id", insertable = false, updatable = false)
+    @JoinColumn(name = "address_id")
     private AddressDB address;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "library")
@@ -33,11 +33,11 @@ public class LibraryDB {
     }
 
     private LibraryDB(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-        address = builder.address;
-        book = builder.book;
-        user = builder.user;
+        setId(builder.id);
+        setName(builder.name);
+        setAddress(builder.address);
+        setBook(builder.book);
+        setUser(builder.user);
     }
 
     public static Builder newBuilder() {
@@ -48,20 +48,40 @@ public class LibraryDB {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public AddressDB getAddress() {
         return address;
     }
 
+    public void setAddress(AddressDB address) {
+        this.address = address;
+    }
+
     public BookDB getBook() {
         return book;
     }
 
+    public void setBook(BookDB book) {
+        this.book = book;
+    }
+
     public UserDB getUser() {
         return user;
+    }
+
+    public void setUser(UserDB user) {
+        this.user = user;
     }
 
     public static final class Builder {
