@@ -76,7 +76,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="btn btn-success btn-large">Добавить</a>
+            <a href="${pageContext.request.contextPath}/admin/library" role="button" class="btn btn-success btn-large">Добавить</a>
         </div>
     </div>
     <div class="row">
@@ -104,7 +104,7 @@
                                 <td><c:out value="${library.address.street}"/></td>
                                 <td><c:out value="${library.address.phone}"/></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/libraries/${library.id}"
+                                    <a href="${pageContext.request.contextPath}/admin/library/${library.id}"
                                        role="button" class="btn btn-warning btn-large">Редактировать</a>
                                     <button data-id="${library.id}" type="button" class="delete-button-class btn btn-danger btn-large"
                                             data-toggle="modal"
@@ -150,7 +150,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button"
-                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/library/' + $('#currentId').val())"
+                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/libraries/' + $('#currentId').val())"
                         class="btn btn-danger">Удалить
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

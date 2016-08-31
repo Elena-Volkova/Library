@@ -76,7 +76,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/admin/library" role="button" class="btn btn-success btn-large">Библиотеки</a>
+            <a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="btn btn-success btn-large">Библиотеки</a>
         </div>
         <div class="col-md-12">
             <a href="${pageContext.request.contextPath}/admin/users" role="button" class="btn btn-success btn-large">Пользователи</a>

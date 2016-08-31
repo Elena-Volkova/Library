@@ -20,7 +20,7 @@ public class LibraryController {
         this.libraryService = libraryService;
     }
 
-    @RequestMapping(value = "/admin/library", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/libraries", method = RequestMethod.GET)
     public ModelAndView getLibraries() {
         ModelAndView model = new ModelAndView();
         model.addObject("libraries", libraryService.getLibraries());
@@ -28,7 +28,7 @@ public class LibraryController {
         return model;
     }
 
-    @RequestMapping(value = "/admin/libraries", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/library", method = RequestMethod.GET)
     public ModelAndView getLibrary() {
         ModelAndView model = new ModelAndView();
         model.addObject("library", new LibraryDTO());
@@ -36,7 +36,7 @@ public class LibraryController {
         return model;
     }
 
-    @RequestMapping(value = "/admin/libraries/{libraryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/library/{libraryId}", method = RequestMethod.GET)
     public ModelAndView getLibrary(@PathVariable Long libraryId) {
         ModelAndView model = new ModelAndView();
         model.addObject("library", libraryService.getLibrary(libraryId));
@@ -44,7 +44,7 @@ public class LibraryController {
         return model;
     }
 
-    @RequestMapping(value = "/admin/libraries", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/library", method = RequestMethod.POST)
     public ModelAndView addLibrary(@ModelAttribute LibraryDTO library) {
         libraryService.add(library);
         ModelAndView model = new ModelAndView();
@@ -52,7 +52,7 @@ public class LibraryController {
         return model;
     }
 
-    @RequestMapping(value = "/admin/libraries/{libraryId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/library/{libraryId}", method = RequestMethod.POST)
     public ModelAndView updateLibrary(@PathVariable Long libraryId, @ModelAttribute LibraryDTO libraryDTO) {
         libraryService.update(libraryDTO);
         ModelAndView model = new ModelAndView();
@@ -60,7 +60,7 @@ public class LibraryController {
         return model;
     }
 
-    @RequestMapping(value = "/admin/library/{libraryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/libraries/{libraryId}", method = RequestMethod.GET)
     public ModelAndView deleteLibrary(@PathVariable Long libraryId) {
         ModelAndView model = new ModelAndView();
         libraryService.delete(libraryId);
