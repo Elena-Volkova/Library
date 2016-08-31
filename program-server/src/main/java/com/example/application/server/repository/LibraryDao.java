@@ -12,7 +12,7 @@ public interface LibraryDao {
 
     void saveLibrary(LibraryDB library);
 
-    void deleteLibrary(Long libraryId);
+    void deleteLibrary(LibraryDB library);
 
     void updateLibrary(LibraryDB library);
 

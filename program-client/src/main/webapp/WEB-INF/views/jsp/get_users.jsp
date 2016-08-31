@@ -76,7 +76,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/admin/library" role="button" class="btn btn-success btn-large">Добавить</a>
+            <a href="${pageContext.request.contextPath}/admin/user" role="button" class="btn btn-success btn-large">Добавить</a>
         </div>
     </div>
     <div class="row">
@@ -87,26 +87,26 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Название библиотеки</th>
-                            <th>Страна</th>
-                            <th>Город</th>
-                            <th>Улица, номер дома</th>
-                            <th>Телефон</th>
+                            <th>Логин</th>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Отчество</th>
+                            <th>Роль</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="library" items="${libraries}">
+                        <c:forEach var="user" items="${users}">
                             <tr>
-                                <th scope="row"><c:out value="${library.id}"/></th>
-                                <td><c:out value="${library.name}"/></td>
-                                <td><c:out value="${library.address.country}"/></td>
-                                <td><c:out value="${library.address.city}"/></td>
-                                <td><c:out value="${library.address.street}"/></td>
-                                <td><c:out value="${library.address.phone}"/></td>
+                                <th scope="row"><c:out value="${user.id}"/></th>
+                                <td><c:out value="${user.login}"/></td>
+                                <td><c:out value="${user.name}"/></td>
+                                <td><c:out value="${user.surname}"/></td>
+                                <td><c:out value="${user.patronymic}"/></td>
+                                <td><c:out value="${user.role}"/></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/library/${library.id}"
+                                    <a href="${pageContext.request.contextPath}/admin/users/${user.id}"
                                        role="button" class="btn btn-warning btn-large">Редактировать</a>
-                                    <button data-id="${library.id}" type="button" class="delete-button-class btn btn-danger btn-large"
+                                    <button data-id="${user.id}" type="button" class="delete-button-class btn btn-danger btn-large"
                                             data-toggle="modal"
                                             data-target=".bs-example-modal-lg">Удалить
                                     </button>
@@ -150,7 +150,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button"
-                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/library/' + $('#currentId').val() + '/delete')"
+                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/user/' + $('#currentId').val())"
                         class="btn btn-danger">Удалить
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

@@ -2,12 +2,18 @@ package com.example.application.server.repository.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "library")
@@ -19,15 +25,18 @@ public class LibraryDB {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressDB address;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "library")
-    private BookDB book;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "library", orphanRemoval = true)
+    private List<BookDB> books;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "library")
-    private UserDB user;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "library_user",
+            joinColumns = {@JoinColumn(name = "library_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<UserDB> users = new ArrayList<>();
 
     public LibraryDB() {
     }
@@ -36,8 +45,8 @@ public class LibraryDB {
         setId(builder.id);
         setName(builder.name);
         setAddress(builder.address);
-        setBook(builder.book);
-        setUser(builder.user);
+        setBooks(builder.books);
+        setUsers(builder.users);
     }
 
     public static Builder newBuilder() {
@@ -68,28 +77,28 @@ public class LibraryDB {
         this.address = address;
     }
 
-    public BookDB getBook() {
-        return book;
+    public List<BookDB> getBooks() {
+        return books;
     }
 
-    public void setBook(BookDB book) {
-        this.book = book;
+    public void setBooks(List<BookDB> books) {
+        this.books = books;
     }
 
-    public UserDB getUser() {
-        return user;
+    public List<UserDB> getUsers() {
+        return users;
     }
 
-    public void setUser(UserDB user) {
-        this.user = user;
+    public void setUsers(List<UserDB> users) {
+        this.users = users;
     }
 
     public static final class Builder {
         private Long id;
         private String name;
         private AddressDB address;
-        private BookDB book;
-        private UserDB user;
+        private List<BookDB> books;
+        private List<UserDB> users;
 
         private Builder() {
         }
@@ -109,13 +118,13 @@ public class LibraryDB {
             return this;
         }
 
-        public Builder withBook(BookDB val) {
-            book = val;
+        public Builder withBook(List<BookDB> val) {
+            books = val;
             return this;
         }
 
-        public Builder withUser(UserDB val) {
-            user = val;
+        public Builder withUsers(List<UserDB> val) {
+            users = val;
             return this;
         }
 

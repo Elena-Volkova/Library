@@ -2,6 +2,7 @@ package com.example.application.server.repository.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -33,12 +34,12 @@ public class BookDB {
     @Column(name = "availability")
     private boolean availability;
 
-    @OneToOne
-    @JoinColumn(name = "library_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "library_id", nullable = false)
     private LibraryDB library;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
-    private UserCardDB userCard;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
+    private List<UserCardDB> userCards;
 
     public BookDB() {
     }
@@ -53,7 +54,7 @@ public class BookDB {
         setReceiptDate(builder.receiptDate);
         setAvailability(builder.availability);
         setLibrary(builder.library);
-        setUserCard(builder.userCard);
+        setUserCards(builder.userCards);
     }
 
     public static Builder newBuilder() {
@@ -132,12 +133,12 @@ public class BookDB {
         this.library = library;
     }
 
-    public UserCardDB getUserCard() {
-        return userCard;
+    public List<UserCardDB> getUserCards() {
+        return userCards;
     }
 
-    public void setUserCard(UserCardDB userCard) {
-        this.userCard = userCard;
+    public void setUserCards(List<UserCardDB> userCards) {
+        this.userCards = userCards;
     }
 
     public static final class Builder {
@@ -150,7 +151,7 @@ public class BookDB {
         private Date receiptDate;
         private boolean availability;
         private LibraryDB library;
-        private UserCardDB userCard;
+        private List<UserCardDB> userCards;
 
         private Builder() {
         }
@@ -200,8 +201,8 @@ public class BookDB {
             return this;
         }
 
-        public Builder withUserCard(UserCardDB val) {
-            userCard = val;
+        public Builder withUserCard(List<UserCardDB> val) {
+            userCards = val;
             return this;
         }
 

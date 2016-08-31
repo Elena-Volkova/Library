@@ -14,95 +14,68 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public AdminController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView adminPage(
-            @RequestParam(required = false) boolean libraryAdd,
-            @RequestParam(required = false) boolean libraryUpdate,
-            @RequestParam(required = false) boolean libraryDelete,
-            @RequestParam(required = false) boolean userAdd,
-            @RequestParam(required = false) boolean userUpdate,
-            @RequestParam(required = false) boolean userDelete,
-            @RequestParam(required = false) boolean error
-    ) {
+    public ModelAndView adminPage(@RequestParam(required = false) AdminMessage message) {
         ModelAndView model = new ModelAndView();
-        if (libraryAdd) {
-            model.addObject("msg", "Библиотека успешно добавлена!");
+        if (message != null) {
+            model.addObject("msg", message.getMessage());
         }
-        if (libraryUpdate) {
-            model.addObject("msg", "Библиотека успешно обновлена!");
-        }
-        if (libraryDelete) {
-            model.addObject("msg", "Библиотека успешно удалена!");
-        }
-        if (userAdd) {
-            model.addObject("msg", "Сотрудник успешно создан!");
-        }
-        if (userUpdate) {
-            model.addObject("msg", "Сотрудник успешно обновлен!");
-        }
-        if (userDelete) {
-            model.addObject("msg", "Сотрудник успешно удален!");
-        }
-        if (error) {
-            model.addObject("msg", "Сотрудник c такой же фамилией уже был создан создан!");
-        }
-        model.addObject("users", userService.getUsers());
         model.setViewName("admin");
         return model;
     }
 
-    @RequestMapping(value = "/admin/add", method = RequestMethod.GET)
-    public ModelAndView addUser() {
+    @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
+    public ModelAndView getUsers() {
         ModelAndView model = new ModelAndView();
+        model.addObject("users", userService.getUsers());
+        model.setViewName("get_users");
+        return model;
+    }
+
+    @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
+    public ModelAndView getUser() {
+        ModelAndView model = new ModelAndView();
+        model.addObject("user", new UserDTO());
         model.setViewName("add_user");
         return model;
     }
 
-    @RequestMapping(value = "/admin/update/{userId}", method = RequestMethod.GET)
-    public ModelAndView updateUser(@PathVariable Long userId) {
+    @RequestMapping(value = "/admin/users/{userId}", method = RequestMethod.GET)
+    public ModelAndView getUser(@PathVariable Long userId) {
         ModelAndView model = new ModelAndView();
         model.addObject("user", userService.getUser(userId));
-        model.setViewName("update_user");
+        model.setViewName("add_user");
         return model;
     }
 
-    @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/users", method = RequestMethod.POST)
     public ModelAndView addUser(@ModelAttribute UserDTO user) {
-        UserDTO userFromDatabase = userService.getUserByUsername(user.getLogin());
+        userService.add(user);
         ModelAndView model = new ModelAndView();
-        if (userFromDatabase == null) {
-            //user.setRole(RoleEnum.USER);
-            userService.add(user);
-            model.setViewName("redirect:/admin?successAdd=true");
-        } else {
-            model.setViewName("redirect:/admin?error=true");
-        }
+        model.setViewName("redirect:/admin?message=" + AdminMessage.USER_ADDED);
         return model;
     }
 
-    @RequestMapping(value = "/admin/update/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/users/{userId}", method = RequestMethod.POST)
     public ModelAndView updateUser(@PathVariable Long userId, @ModelAttribute UserDTO user) {
-        UserDTO userFromDatabase = userService.getUserByUsername(user.getLogin());
+        userService.update(user);
         ModelAndView model = new ModelAndView();
-        if (userFromDatabase == null || userFromDatabase.getId().equals(userId)) {
-            UserDTO userDB = userService.getUser(userId);
-            //user.setRole(userDB.getRole());
-            userService.update(user);
-            model.setViewName("redirect:/admin?successUpdate=true");
-        } else {
-            model.setViewName("redirect:/admin?error=true");
-        }
+        model.setViewName("redirect:/admin?message=" + AdminMessage.USER_UPDATED);
         return model;
     }
 
-    @RequestMapping(value = "/admin/delete/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/user/{userId}", method = RequestMethod.GET)
     public ModelAndView deleteUser(@PathVariable Long userId) {
         ModelAndView model = new ModelAndView();
         userService.delete(userId);
-        model.setViewName("redirect:/admin?successDelete=true");
+        model.setViewName("redirect:/admin?message=" + AdminMessage.USER_DELETED);
         return model;
     }
 }

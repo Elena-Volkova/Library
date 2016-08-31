@@ -17,7 +17,7 @@ public class UserBuilderUtil {
                 .withSurname(user.getSurname())
                 .withPatronymic(user.getPatronymic())
                 .withAddress(user.getAddress() != null ? AddressBuilderUtil.convertAddressToAddressDB(user.getAddress()) : null)
-                .withLibrary(user.getLibrary() != null ? LibraryBuilderUtil.convertLibraryToLibraryDB(user.getLibrary()) : null)
+                //.withLibrary(user.getLibrary() != null ? LibraryBuilderUtil.convertLibraryToLibraryDB(user.getLibrary()) : null)
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class UserBuilderUtil {
                     .withSurname(user.getSurname())
                     .withPatronymic(user.getPatronymic())
                     .withAddress(user.getAddress() != null ? AddressBuilderUtil.convertAddressDBToAddress(user.getAddress()) : null)
-                    .withLibrary(user.getLibrary() != null ? LibraryBuilderUtil.convertLibraryDBToLibrary(user.getLibrary()) : null)
+                    //.withLibrary(user.getLibrary() != null ? LibraryBuilderUtil.convertLibraryDBToLibrary(user.getLibrary()) : null)
                     .build();
         }
     }

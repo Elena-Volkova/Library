@@ -18,8 +18,12 @@ public class UserController {
 
     private static final Logger LOGGER = Logger.getLogger(UserController.class);
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ModelAndView adminPage(

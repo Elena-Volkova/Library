@@ -31,10 +31,11 @@ public class LibraryDaoImpl extends AbstractDao implements LibraryDao {
     }
 
     @Override
-    public void deleteLibrary(Long libraryId) {
-        Query query = getSession().createSQLQuery("DELETE FROM library WHERE id = :id");
+    public void deleteLibrary(LibraryDB library) {
+        getSession().delete(library);
+/*        Query query = getSession().createSQLQuery("DELETE FROM library WHERE id = :id");
         query.setLong("id", libraryId);
-        query.executeUpdate();
+        query.executeUpdate();*/
     }
 
     @Override

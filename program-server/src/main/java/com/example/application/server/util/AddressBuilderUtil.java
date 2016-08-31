@@ -1,7 +1,9 @@
 package com.example.application.server.util;
 
 import com.example.application.server.model.AddressDTO;
+import com.example.application.server.model.LibraryDTO;
 import com.example.application.server.repository.model.AddressDB;
+import com.example.application.server.repository.model.LibraryDB;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,4 +33,10 @@ public class AddressBuilderUtil {
         }
     }
 
+    public static void mergeAddressWithAddressDB(AddressDB addressDB, AddressDTO addressDTO) {
+        addressDB.setCountry(addressDTO.getCountry());
+        addressDB.setCity(addressDTO.getCity());
+        addressDB.setStreet(addressDTO.getStreet());
+        addressDB.setPhone(addressDTO.getPhone());
+    }
 }

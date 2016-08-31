@@ -19,8 +19,12 @@ public class UserEndpoint {
 
     private static final String NAMESPACE_URI = "http://example.com/application/server/model";
 
+    private final UserDao userDao;
+
     @Autowired
-    private UserDao userDao;
+    public UserEndpoint(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "saveUserRequest")
     @ResponsePayload

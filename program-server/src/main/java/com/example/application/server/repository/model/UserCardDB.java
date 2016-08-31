@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -28,12 +28,12 @@ public class UserCardDB {
     @Column(name = "returned")
     private Boolean returned;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private UserDB user;
 
-    @OneToOne
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
     private BookDB book;
 
     public UserCardDB() {

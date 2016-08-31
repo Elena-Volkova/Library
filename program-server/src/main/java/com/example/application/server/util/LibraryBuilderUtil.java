@@ -27,4 +27,9 @@ public class LibraryBuilderUtil {
                     .build();
         }
     }
+
+    public static void mergeLibraryWithLibraryDB(LibraryDB libraryDB, LibraryDTO libraryDTO) {
+        libraryDB.setName(libraryDTO.getName());
+        AddressBuilderUtil.mergeAddressWithAddressDB(libraryDB.getAddress(), libraryDTO.getAddress());
+    }
 }

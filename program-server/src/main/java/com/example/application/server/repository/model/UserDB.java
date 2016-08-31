@@ -3,6 +3,7 @@ package com.example.application.server.repository.model;
 import com.example.application.server.model.RoleEnum;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -32,16 +33,15 @@ public class UserDB {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @OneToOne
-    @JoinColumn(name = "address_id", insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private AddressDB address;
 
-    @OneToOne
-    @JoinColumn(name = "library_id", insertable = false, updatable = false)
-    private LibraryDB library;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
+    private List<LibraryDB> libraries;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private UserCardDB userCard;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private List<UserCardDB> userCards;
 
     public UserDB() {
     }
@@ -55,8 +55,8 @@ public class UserDB {
         setSurname(builder.surname);
         setPatronymic(builder.patronymic);
         setAddress(builder.address);
-        setLibrary(builder.library);
-        setUserCard(builder.userCard);
+        setLibraries(builder.libraries);
+        setUserCards(builder.userCards);
     }
 
     public static Builder newBuilder() {
@@ -127,20 +127,20 @@ public class UserDB {
         this.address = address;
     }
 
-    public LibraryDB getLibrary() {
-        return library;
+    public List<LibraryDB> getLibraries() {
+        return libraries;
     }
 
-    public void setLibrary(LibraryDB library) {
-        this.library = library;
+    public void setLibraries(List<LibraryDB> libraries) {
+        this.libraries = libraries;
     }
 
-    public UserCardDB getUserCard() {
-        return userCard;
+    public List<UserCardDB> getUserCards() {
+        return userCards;
     }
 
-    public void setUserCard(UserCardDB userCard) {
-        this.userCard = userCard;
+    public void setUserCards(List<UserCardDB> userCards) {
+        this.userCards = userCards;
     }
 
     public static final class Builder {
@@ -152,8 +152,8 @@ public class UserDB {
         private String surname;
         private String patronymic;
         private AddressDB address;
-        private LibraryDB library;
-        private UserCardDB userCard;
+        private List<LibraryDB> libraries;
+        private List<UserCardDB> userCards;
 
         private Builder() {
         }
@@ -198,13 +198,13 @@ public class UserDB {
             return this;
         }
 
-        public Builder withLibrary(LibraryDB val) {
-            library = val;
+        public Builder withLibrary(List<LibraryDB> val) {
+            libraries = val;
             return this;
         }
 
-        public Builder withUserCard(UserCardDB val) {
-            userCard = val;
+        public Builder withUserCard(List<UserCardDB> val) {
+            userCards = val;
             return this;
         }
 
