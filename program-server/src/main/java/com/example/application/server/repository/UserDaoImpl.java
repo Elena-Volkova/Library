@@ -14,9 +14,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @SuppressWarnings(value = "unchecked")
     @Override
-    public List<UserDB> findAllUsers() {
+    public List<UserDB> findUsersByRole(List<RoleEnum> roles) {
         Criteria criteria = getSession().createCriteria(UserDB.class);
-        criteria.add(Restrictions.ne("role", RoleEnum.ADMIN));
+        criteria.add(Restrictions.in("role", roles));
         return (List<UserDB>) criteria.list();
     }
 

@@ -1,7 +1,5 @@
 package com.example.application.client.service.model;
 
-import com.example.application.client.service.model.UserDTO;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,7 +20,7 @@ public class GetUsersResponse {
 
     public List<UserDTO> getUsers() {
         if (users == null) {
-            users = new ArrayList<UserDTO>();
+            users = new ArrayList<>();
         }
         return this.users;
     }

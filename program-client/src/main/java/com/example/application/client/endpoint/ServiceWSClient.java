@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
+import java.util.List;
+
 /**
  * User client
  */
@@ -40,8 +42,9 @@ public class ServiceWSClient extends WebServiceGatewaySupport {
                         new SoapActionCallback(WEBSERVICE_URL + "/GetUserByUsernameResponse"));
     }
 
-    public GetUsersResponse getUsers() {
+    public GetUsersResponse getUsers(List<RoleEnum> roles) {
         GetUsersRequest request = new GetUsersRequest();
+        request.setRoles(roles);
 
         LOGGER.info("Requesting all users");
 

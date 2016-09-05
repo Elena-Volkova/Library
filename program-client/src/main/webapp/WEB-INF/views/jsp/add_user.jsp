@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,37 +67,87 @@
 
 
 <div class="container">
-    <form role="form" method="post">
+    <form:form modelAttribute="user" method="post" autocomplete="off">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        <div class="form-group">
-                            <label for="username">Фамилия:</label>
-                            <input required type="text" class="form-control" id="username" name="username">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Имя:</label>
-                            <input required type="text" class="form-control" id="name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="surname">Отчество:</label>
-                            <input required type="text" class="form-control" id="surname" name="surname">
-                        </div>
+                        <form:input path="id" type="hidden"/>
+                        <form:input path="address.id" type="hidden"/>
 
                         <div class="form-group">
-                            <label for="job">Должность:</label>
-                            <select class="form-control" name="job" id="job">
-                                <option value="SENIOR_BAILIFF">Старший судебный исполнитель</option>
-                                <option value="BAILIFF">Судебный исполнитель</option>
-                                <option value="CLERK">Делопроизводитель</option>
-                                <option value="HEAD_OF_ARCHIVES">Заведующий архивом</option>
-                            </select>
+                            <form:label path="login">Логин:</form:label>
+                            <form:input path="login" required="true" cssClass="form-control"/>
+                        </div>
+                        <c:if test="${empty user.id}">
+                            <div class="form-group">
+                                <form:label path="password">Пароль:</form:label>
+                                <form:input path="password" type="password" required="true" cssClass="form-control"/>
+                            </div>
+                        </c:if>
+                        <div class="form-group">
+                            <form:label path="surname">Фамилия:</form:label>
+                            <form:input path="surname" required="true" cssClass="form-control"/>
                         </div>
                         <div class="form-group">
-                            <label for="password">Пароль:</label>
-                            <input required type="password" class="form-control" id="password" name="password">
+                            <form:label path="name">Имя:</form:label>
+                            <form:input path="name" required="true" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="patronymic">Отчество:</form:label>
+                            <form:input path="patronymic" required="true" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="role">Роль:</form:label>
+                            <form:select path="role" required="true" cssClass="form-control">
+                                <c:choose>
+                                    <c:when test="${user.role == 'ADMIN'}">
+                                        <form:option value="ADMIN" selected="true">Администратор</form:option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form:option value="ADMIN">Администратор</form:option>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${user.role == 'USER'}">
+                                        <form:option value="USER" selected="true">Пользователь</form:option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form:option value="USER">Пользователь</form:option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </form:select>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="address.country">Страна:</form:label>
+                            <form:input path="address.country" required="true" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="address.city">Город:</form:label>
+                            <form:input path="address.city" required="true" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="address.street">Улица, номер дома:</form:label>
+                            <form:input path="address.street" required="true" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="address.phone">Телефон:</form:label>
+                            <form:input path="address.phone" required="true" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:select path="libraries" multiple="true">
+                                <c:forEach var="library" items="${allLibraries}">
+                                    <c:choose>
+                                        <c:when test="${user.libraries.contains(library)}">
+                                            <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </form:select>
                         </div>
                     </div>
                 </div>
@@ -107,13 +158,22 @@
                 <input type="hidden"
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
-                <button type="submit" class="btn btn-success">Добавить</button>
+                <button type="submit" class="btn btn-success">
+                    <c:choose>
+                        <c:when test="${empty user.id}">
+                            Добавить
+                        </c:when>
+                        <c:otherwise>
+                            Обновить
+                        </c:otherwise>
+                    </c:choose>
+                </button>
                 <button type="button" class="btn btn-btn-danger btn-large" data-toggle="modal"
                         data-target=".bs-example-modal-lg">Отменить
                 </button>
             </div>
         </div>
-    </form>
+    </form:form>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">

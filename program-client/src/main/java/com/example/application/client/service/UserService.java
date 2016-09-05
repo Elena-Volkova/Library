@@ -1,5 +1,6 @@
 package com.example.application.client.service;
 
+import com.example.application.client.service.model.RoleEnum;
 import com.example.application.client.service.model.UserDTO;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface UserService {
 
     UserDTO getUser(Long userId);
 
-    List<UserDTO> getUsers();
+    List<UserDTO> getUsers(List<RoleEnum> roles);
 
     UserDTO getUserByUsername(String username);
 }

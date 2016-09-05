@@ -1,6 +1,7 @@
 package com.example.application.client.controller.user;
 
 import com.example.application.client.service.UserService;
+import com.example.application.client.service.model.RoleEnum;
 import com.example.application.client.service.model.Search;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
 
 /**
  * User Controller
@@ -45,7 +48,6 @@ public class UserController {
 /*        List<Process> processes = processService.getProcesses(new Search());
         model.addObject("processes", processes);
         model.addObject("count", processes.size());*/
-        model.addObject("users", userService.getUsers());
         model.setViewName("user");
         return model;
     }

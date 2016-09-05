@@ -1,7 +1,9 @@
 package com.example.application.server.endpoint;
 
 import com.example.application.server.model.action.*;
+import com.example.application.server.repository.LibraryDao;
 import com.example.application.server.repository.UserDao;
+import com.example.application.server.repository.model.LibraryDB;
 import com.example.application.server.repository.model.UserDB;
 import com.example.application.server.util.UserBuilderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,12 @@ public class UserEndpoint {
 
     private final UserDao userDao;
 
+    private final LibraryDao libraryDao;
+
     @Autowired
-    public UserEndpoint(UserDao userDao) {
+    public UserEndpoint(UserDao userDao, LibraryDao libraryDao) {
         this.userDao = userDao;
+        this.libraryDao = libraryDao;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "saveUserRequest")
@@ -31,9 +36,12 @@ public class UserEndpoint {
     @Transactional
     public SaveUserResponse saveUserRequest(@RequestPayload SaveUserRequest request) {
         SaveUserResponse response = new SaveUserResponse();
-        userDao.saveUser(
-                UserBuilderUtil.convertUserToUserDB(request.getUser())
-        );
+        List<LibraryDB> libraries = request.getUser().getLibraries().stream()
+                .map(libraryDTO -> libraryDao.findById(libraryDTO.getId()))
+                .collect(Collectors.toList());
+        UserDB user = UserBuilderUtil.convertUserToUserDB(request.getUser());
+        user.setLibraries(libraries);
+        userDao.saveUser(user);
         response.setResult(Boolean.TRUE);
         return response;
     }
@@ -43,9 +51,13 @@ public class UserEndpoint {
     @Transactional
     public UpdateUserResponse updateUserRequest(@RequestPayload UpdateUserRequest request) {
         UpdateUserResponse response = new UpdateUserResponse();
-        userDao.updateUser(
-                UserBuilderUtil.convertUserToUserDB(request.getUser())
-        );
+        List<LibraryDB> libraries = request.getUser().getLibraries().stream()
+                .map(libraryDTO -> libraryDao.findById(libraryDTO.getId()))
+                .collect(Collectors.toList());
+        UserDB user = userDao.findById(request.getUser().getId());
+        UserBuilderUtil.mergeUserWithUserDB(user, request.getUser());
+        user.setLibraries(libraries);
+        userDao.updateUser(user);
         response.setResult(Boolean.TRUE);
         return response;
     }
@@ -55,9 +67,7 @@ public class UserEndpoint {
     @Transactional
     public DeleteUserResponse deleteUserRequest(@RequestPayload DeleteUserRequest request) {
         DeleteUserResponse response = new DeleteUserResponse();
-        userDao.deleteUser(
-                request.getUserId()
-        );
+        userDao.deleteUser(request.getUserId());
         response.setResult(Boolean.TRUE);
         return response;
     }
@@ -67,9 +77,7 @@ public class UserEndpoint {
     @Transactional
     public GetUserByIdResponse getUserByIdRequest(@RequestPayload GetUserByIdRequest request) {
         GetUserByIdResponse response = new GetUserByIdResponse();
-        UserDB user = userDao.findById(
-                request.getUserId()
-        );
+        UserDB user = userDao.findById(request.getUserId());
         response.setUser(UserBuilderUtil.convertUserDBToUser(user));
         return response;
     }
@@ -79,9 +87,7 @@ public class UserEndpoint {
     @Transactional
     public GetUserByUsernameResponse getUserByUsernameRequest(@RequestPayload GetUserByUsernameRequest request) {
         GetUserByUsernameResponse response = new GetUserByUsernameResponse();
-        UserDB user = userDao.findByUsername(
-                request.getUsername()
-        );
+        UserDB user = userDao.findByUsername(request.getUsername());
         response.setUser(UserBuilderUtil.convertUserDBToUser(user));
         return response;
     }
@@ -91,12 +97,10 @@ public class UserEndpoint {
     @Transactional
     public GetUsersResponse getUsersRequest(@RequestPayload GetUsersRequest request) {
         GetUsersResponse response = new GetUsersResponse();
-        List<UserDB> users = userDao.findAllUsers();
-        response.setUsers(
-                users.stream()
-                        .map(UserBuilderUtil::convertUserDBToUser)
-                        .collect(Collectors.toList())
-        );
+        List<UserDB> users = userDao.findUsersByRole(request.getRoles());
+        response.setUsers(users.stream()
+                .map(UserBuilderUtil::convertUserDBToUser)
+                .collect(Collectors.toList()));
         return response;
     }
 }

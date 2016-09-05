@@ -17,7 +17,6 @@ public class UserBuilderUtil {
                 .withSurname(user.getSurname())
                 .withPatronymic(user.getPatronymic())
                 .withAddress(user.getAddress() != null ? AddressBuilderUtil.convertAddressToAddressDB(user.getAddress()) : null)
-                //.withLibrary(user.getLibrary() != null ? LibraryBuilderUtil.convertLibraryToLibraryDB(user.getLibrary()) : null)
                 .build();
     }
 
@@ -34,9 +33,18 @@ public class UserBuilderUtil {
                     .withSurname(user.getSurname())
                     .withPatronymic(user.getPatronymic())
                     .withAddress(user.getAddress() != null ? AddressBuilderUtil.convertAddressDBToAddress(user.getAddress()) : null)
-                    //.withLibrary(user.getLibrary() != null ? LibraryBuilderUtil.convertLibraryDBToLibrary(user.getLibrary()) : null)
+                    .withLibraries(user.getLibraries() != null ? LibraryBuilderUtil.convertLibrariesDBToLibraries(user.getLibraries()) : null)
                     .build();
         }
     }
 
+    public static void mergeUserWithUserDB(UserDB userDB, UserDTO userDTO) {
+        userDB.setLogin(userDTO.getLogin());
+        userDB.setPassword(userDTO.getPassword() != null ? userDTO.getPassword() : userDB.getPassword());
+        userDB.setRole(userDTO.getRole());
+        userDB.setName(userDTO.getName());
+        userDB.setSurname(userDTO.getSurname());
+        userDB.setPatronymic(userDTO.getPatronymic());
+        AddressBuilderUtil.mergeAddressWithAddressDB(userDB.getAddress(), userDTO.getAddress());
+    }
 }

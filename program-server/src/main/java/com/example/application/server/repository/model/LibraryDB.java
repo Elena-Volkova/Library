@@ -32,10 +32,7 @@ public class LibraryDB {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "library", orphanRemoval = true)
     private List<BookDB> books;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "library_user",
-            joinColumns = {@JoinColumn(name = "library_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "libraries", cascade = CascadeType.ALL)
     private List<UserDB> users = new ArrayList<>();
 
     public LibraryDB() {

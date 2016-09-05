@@ -88,10 +88,14 @@
                         <tr>
                             <th>#</th>
                             <th>Логин</th>
-                            <th>Имя</th>
                             <th>Фамилия</th>
+                            <th>Имя</th>
                             <th>Отчество</th>
                             <th>Роль</th>
+                            <th>Страна</th>
+                            <th>Город</th>
+                            <th>Улица, номер дома</th>
+                            <th>Телефон</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -99,12 +103,16 @@
                             <tr>
                                 <th scope="row"><c:out value="${user.id}"/></th>
                                 <td><c:out value="${user.login}"/></td>
-                                <td><c:out value="${user.name}"/></td>
                                 <td><c:out value="${user.surname}"/></td>
+                                <td><c:out value="${user.name}"/></td>
                                 <td><c:out value="${user.patronymic}"/></td>
                                 <td><c:out value="${user.role}"/></td>
+                                <td><c:out value="${user.address.country}"/></td>
+                                <td><c:out value="${user.address.city}"/></td>
+                                <td><c:out value="${user.address.street}"/></td>
+                                <td><c:out value="${user.address.phone}"/></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/users/${user.id}"
+                                    <a href="${pageContext.request.contextPath}/admin/user/${user.id}"
                                        role="button" class="btn btn-warning btn-large">Редактировать</a>
                                     <button data-id="${user.id}" type="button" class="delete-button-class btn btn-danger btn-large"
                                             data-toggle="modal"
@@ -146,11 +154,11 @@
                 <h4 class="modal-title">Удаление</h4>
             </div>
             <div class="modal-body">
-                <p>Вы действительно хотите удалить библиотеку?</p>
+                <p>Вы действительно хотите удалить пользователя?</p>
             </div>
             <div class="modal-footer">
                 <button type="button"
-                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/user/' + $('#currentId').val())"
+                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/users/' + $('#currentId').val())"
                         class="btn btn-danger">Удалить
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

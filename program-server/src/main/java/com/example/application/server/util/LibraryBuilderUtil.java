@@ -4,6 +4,10 @@ import com.example.application.server.model.LibraryDTO;
 import com.example.application.server.repository.model.LibraryDB;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class LibraryBuilderUtil {
 
@@ -26,6 +30,10 @@ public class LibraryBuilderUtil {
                     .withAddress(library.getAddress() != null ? AddressBuilderUtil.convertAddressDBToAddress(library.getAddress()) : null)
                     .build();
         }
+    }
+
+    static List<LibraryDTO> convertLibrariesDBToLibraries(List<LibraryDB> libraries) {
+        return libraries.stream().map(LibraryBuilderUtil::convertLibraryDBToLibrary).collect(Collectors.toList());
     }
 
     public static void mergeLibraryWithLibraryDB(LibraryDB libraryDB, LibraryDTO libraryDTO) {

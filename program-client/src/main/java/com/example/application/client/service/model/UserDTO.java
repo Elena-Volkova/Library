@@ -3,6 +3,8 @@ package com.example.application.client.service.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user", propOrder = {
@@ -14,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
         "surname",
         "patronymic",
         "address",
-        "library"
+        "libraries"
 })
 public class UserDTO {
 
@@ -26,7 +28,7 @@ public class UserDTO {
     private String surname;
     private String patronymic;
     private AddressDTO address;
-    private LibraryDTO library;
+    private List<LibraryDTO> libraries;
 
     public UserDTO() {
     }
@@ -40,7 +42,7 @@ public class UserDTO {
         setSurname(builder.surname);
         setPatronymic(builder.patronymic);
         setAddress(builder.address);
-        setLibrary(builder.library);
+        setLibraries(builder.libraries);
     }
 
     public static Builder newBuilder() {
@@ -111,12 +113,12 @@ public class UserDTO {
         this.address = address;
     }
 
-    public LibraryDTO getLibrary() {
-        return library;
+    public List<LibraryDTO> getLibraries() {
+        return libraries;
     }
 
-    public void setLibrary(LibraryDTO library) {
-        this.library = library;
+    public void setLibraries(List<LibraryDTO> libraries) {
+        this.libraries = libraries;
     }
 
     public static final class Builder {
@@ -128,7 +130,7 @@ public class UserDTO {
         private String surname;
         private String patronymic;
         private AddressDTO address;
-        private LibraryDTO library;
+        private List<LibraryDTO> libraries;
 
         private Builder() {
         }
@@ -173,8 +175,8 @@ public class UserDTO {
             return this;
         }
 
-        public Builder withLibrary(LibraryDTO val) {
-            library = val;
+        public Builder withLibrary(List<LibraryDTO> val) {
+            libraries = val;
             return this;
         }
 

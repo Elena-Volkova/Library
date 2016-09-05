@@ -1,6 +1,7 @@
 package com.example.application.client.service;
 
 import com.example.application.client.endpoint.ServiceWSClient;
+import com.example.application.client.service.model.RoleEnum;
 import com.example.application.client.service.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUsers() {
-        return serviceWSClient.getUsers().getUsers();
+    public List<UserDTO> getUsers(List<RoleEnum> roles) {
+        return serviceWSClient.getUsers(roles).getUsers();
     }
 
     @Override
