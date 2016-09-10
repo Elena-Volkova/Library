@@ -15,9 +15,7 @@ public class BookBuilderUtil {
                 .withPublisher(book.getPublisher())
                 .withPublishYear(book.getPublishYear())
                 .withPages(book.getPages())
-                .withReceiptDate(book.getReceiptDate())
                 .withAvailability(book.isAvailability())
-                .withLibrary(book.getLibrary() != null ? LibraryBuilderUtil.convertLibraryToLibraryDB(book.getLibrary()) : null)
                 .build();
     }
 
@@ -32,11 +30,18 @@ public class BookBuilderUtil {
                     .withPublisher(book.getPublisher())
                     .withPublishYear(book.getPublishYear())
                     .withPages(book.getPages())
-                    .withReceiptDate(book.getReceiptDate())
                     .withAvailability(book.isAvailability())
-                    .withLibrary(book.getLibrary() != null ? LibraryBuilderUtil.convertLibraryDBToLibrary(book.getLibrary()) : null)
+                    .withLibraries(book.getLibraries() != null ? LibraryBuilderUtil.convertLibrariesDBToLibraries(book.getLibraries()) : null)
                     .build();
         }
+    }
+
+    public static void mergeBookWithBookDB(BookDB bookDB, BookDTO bookDTO) {
+        bookDB.setAuthor(bookDTO.getAuthor());
+        bookDB.setName(bookDTO.getName());
+        bookDB.setPublisher(bookDTO.getPublisher());
+        bookDB.setPages(bookDTO.getPages());
+        bookDB.setAvailability(bookDTO.isAvailability());
     }
 
 }

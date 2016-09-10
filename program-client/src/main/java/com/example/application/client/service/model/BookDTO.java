@@ -3,7 +3,8 @@ package com.example.application.client.service.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "book", propOrder = {
@@ -13,9 +14,8 @@ import java.util.Date;
         "publisher",
         "publishYear",
         "pages",
-        "receiptDate",
         "availability",
-        "library"
+        "libraries"
 })
 public class BookDTO {
 
@@ -25,9 +25,8 @@ public class BookDTO {
     private String publisher;
     private Integer publishYear;
     private Integer pages;
-    private Date receiptDate;
     private boolean availability;
-    private LibraryDTO library;
+    private List<LibraryDTO> libraries = new ArrayList<>();
 
     public BookDTO() {
     }
@@ -39,9 +38,8 @@ public class BookDTO {
         setPublisher(builder.publisher);
         setPublishYear(builder.publishYear);
         setPages(builder.pages);
-        setReceiptDate(builder.receiptDate);
         setAvailability(builder.availability);
-        setLibrary(builder.library);
+        setLibraries(builder.libraries);
     }
 
     public static Builder newBuilder() {
@@ -96,14 +94,6 @@ public class BookDTO {
         this.pages = pages;
     }
 
-    public Date getReceiptDate() {
-        return receiptDate;
-    }
-
-    public void setReceiptDate(Date receiptDate) {
-        this.receiptDate = receiptDate;
-    }
-
     public boolean isAvailability() {
         return availability;
     }
@@ -112,12 +102,12 @@ public class BookDTO {
         this.availability = availability;
     }
 
-    public LibraryDTO getLibrary() {
-        return library;
+    public List<LibraryDTO> getLibraries() {
+        return libraries;
     }
 
-    public void setLibrary(LibraryDTO library) {
-        this.library = library;
+    public void setLibraries(List<LibraryDTO> libraries) {
+        this.libraries = libraries;
     }
 
     public static final class Builder {
@@ -127,9 +117,8 @@ public class BookDTO {
         private String publisher;
         private Integer publishYear;
         private Integer pages;
-        private Date receiptDate;
         private boolean availability;
-        private LibraryDTO library;
+        private List<LibraryDTO> libraries;
 
         private Builder() {
         }
@@ -164,18 +153,13 @@ public class BookDTO {
             return this;
         }
 
-        public Builder withReceiptDate(Date val) {
-            receiptDate = val;
-            return this;
-        }
-
         public Builder withAvailability(boolean val) {
             availability = val;
             return this;
         }
 
-        public Builder withLibrary(LibraryDTO val) {
-            library = val;
+        public Builder withLibraries(List<LibraryDTO> val) {
+            libraries = val;
             return this;
         }
 

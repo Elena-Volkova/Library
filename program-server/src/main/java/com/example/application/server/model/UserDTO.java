@@ -3,6 +3,7 @@ package com.example.application.server.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,7 +28,7 @@ public class UserDTO {
     private String surname;
     private String patronymic;
     private AddressDTO address;
-    private List<LibraryDTO> libraries;
+    private List<LibraryDTO> libraries = new ArrayList<>();
 
     public UserDTO() {
     }

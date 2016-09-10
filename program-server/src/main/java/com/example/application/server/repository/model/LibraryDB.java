@@ -1,17 +1,6 @@
 package com.example.application.server.repository.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +18,8 @@ public class LibraryDB {
     @JoinColumn(name = "address_id")
     private AddressDB address;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "library", orphanRemoval = true)
-    private List<BookDB> books;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "libraries", cascade = CascadeType.ALL)
+    private List<BookDB> books = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "libraries", cascade = CascadeType.ALL)
     private List<UserDB> users = new ArrayList<>();
@@ -115,7 +104,7 @@ public class LibraryDB {
             return this;
         }
 
-        public Builder withBook(List<BookDB> val) {
+        public Builder withBooks(List<BookDB> val) {
             books = val;
             return this;
         }

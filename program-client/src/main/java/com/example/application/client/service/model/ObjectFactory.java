@@ -99,4 +99,44 @@ public class ObjectFactory {
     public GetLibrariesResponse createGetLibrariesResponse() {
         return new GetLibrariesResponse();
     }
+
+    public SaveBookRequest createSaveBookRequest() {
+        return new SaveBookRequest();
+    }
+
+    public SaveBookResponse createSaveBookResponse() {
+        return new SaveBookResponse();
+    }
+
+    public UpdateBookRequest createUpdateBookRequest() {
+        return new UpdateBookRequest();
+    }
+
+    public UpdateBookResponse createUpdateBookResponse() {
+        return new UpdateBookResponse();
+    }
+
+    public DeleteBookRequest createDeleteBookRequest() {
+        return new DeleteBookRequest();
+    }
+
+    public DeleteBookResponse createDeleteBookResponse() {
+        return new DeleteBookResponse();
+    }
+
+    public GetBookByIdRequest createGetBookByIdRequest() {
+        return new GetBookByIdRequest();
+    }
+
+    public GetBookByIdResponse createGetBookByIdResponse() {
+        return new GetBookByIdResponse();
+    }
+
+    public GetBooksRequest createGetBooksRequest() {
+        return new GetBooksRequest();
+    }
+
+    public GetBooksResponse createGetBooksResponse() {
+        return new GetBooksResponse();
+    }
 }

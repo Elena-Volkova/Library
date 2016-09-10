@@ -28,19 +28,12 @@ public class AdminController {
         this.libraryService = libraryService;
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView adminPage(@RequestParam(required = false) AdminMessage message) {
+    @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
+    public ModelAndView getUsers(@RequestParam(required = false) AdminMessage message) {
         ModelAndView model = new ModelAndView();
         if (message != null) {
             model.addObject("msg", message.getMessage());
         }
-        model.setViewName("admin");
-        return model;
-    }
-
-    @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
-    public ModelAndView getUsers() {
-        ModelAndView model = new ModelAndView();
         model.addObject("users", userService.getUsers(Arrays.asList(RoleEnum.ADMIN, RoleEnum.USER)));
         model.setViewName("get_users");
         return model;
@@ -68,7 +61,7 @@ public class AdminController {
     public ModelAndView addUser(@ModelAttribute UserDTO user) {
         userService.add(user);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin?message=" + AdminMessage.USER_ADDED);
+        model.setViewName("redirect:/admin/users?message=" + AdminMessage.USER_ADDED);
         return model;
     }
 
@@ -76,7 +69,7 @@ public class AdminController {
     public ModelAndView updateUser(@PathVariable Long userId, @ModelAttribute UserDTO user) {
         userService.update(user);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin?message=" + AdminMessage.USER_UPDATED);
+        model.setViewName("redirect:/admin/users?message=" + AdminMessage.USER_UPDATED);
         return model;
     }
 
@@ -84,7 +77,7 @@ public class AdminController {
     public ModelAndView deleteUser(@PathVariable Long userId) {
         ModelAndView model = new ModelAndView();
         userService.delete(userId);
-        model.setViewName("redirect:/admin?message=" + AdminMessage.USER_DELETED);
+        model.setViewName("redirect:/admin/users?message=" + AdminMessage.USER_DELETED);
         return model;
     }
 }

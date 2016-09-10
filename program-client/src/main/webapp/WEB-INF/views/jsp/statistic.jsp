@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-3">
                 <spring:url value="/resources/core/images/logo.png" var="logoImg"/>
-                <img src="${logoImg}" alt="Logo">
+                <img src="${logoImg}" class="logo" alt="Logo">
             </div>
             <div class="col-md-9">
                 <h2>

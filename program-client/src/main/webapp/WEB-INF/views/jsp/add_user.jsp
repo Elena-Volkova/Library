@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-3">
                 <spring:url value="/resources/core/images/logo.png" var="logoImg"/>
-                <img src="${logoImg}" alt="Logo">
+                <img src="${logoImg}" class="logo" alt="Logo">
             </div>
             <div class="col-md-9">
                 <h2>
@@ -40,7 +40,14 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
+                <ul class="nav nav-pills">
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">жырафик</a></li>
+                </ul>
+            </div>
                 <c:url value="/logout" var="logoutUrl"/>
                 <!-- csrt support -->
 
@@ -67,7 +74,7 @@
 
 
 <div class="container">
-    <form:form modelAttribute="user" method="post" autocomplete="off">
+    <form:form modelAttribute="user" method="post">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -83,7 +90,7 @@
                         <c:if test="${empty user.id}">
                             <div class="form-group">
                                 <form:label path="password">Пароль:</form:label>
-                                <form:input path="password" type="password" required="true" cssClass="form-control"/>
+                                <form:input path="password" type="password" required="true" cssClass="form-control" autocomplete="new-password"/>
                             </div>
                         </c:if>
                         <div class="form-group">
@@ -194,7 +201,7 @@
             </div>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Вы действительно хотите отменить?</p>
             <div class="modal-footer">
-                <a href="${pageContext.request.contextPath}/admin" role="button" class="btn btn-danger">Да</a>
+                <a href="${pageContext.request.contextPath}/admin/users" role="button" class="btn btn-danger">Да</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
             </div>
         </div>

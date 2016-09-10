@@ -1,7 +1,6 @@
 package com.example.application.server.repository.model;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,15 +27,14 @@ public class BookDB {
     @Column(name = "pages")
     private Integer pages;
 
-    @Column(name = "receipt_date")
-    private Date receiptDate;
-
     @Column(name = "availability")
     private boolean availability;
 
-    @ManyToOne
-    @JoinColumn(name = "library_id", nullable = false)
-    private LibraryDB library;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "library_book",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "library_id")})
+    private List<LibraryDB> libraries;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
     private List<UserCardDB> userCards;
@@ -51,9 +49,8 @@ public class BookDB {
         setPublisher(builder.publisher);
         setPublishYear(builder.publishYear);
         setPages(builder.pages);
-        setReceiptDate(builder.receiptDate);
         setAvailability(builder.availability);
-        setLibrary(builder.library);
+        setLibraries(builder.libraries);
         setUserCards(builder.userCards);
     }
 
@@ -109,14 +106,6 @@ public class BookDB {
         this.pages = pages;
     }
 
-    public Date getReceiptDate() {
-        return receiptDate;
-    }
-
-    public void setReceiptDate(Date receiptDate) {
-        this.receiptDate = receiptDate;
-    }
-
     public boolean isAvailability() {
         return availability;
     }
@@ -125,12 +114,12 @@ public class BookDB {
         this.availability = availability;
     }
 
-    public LibraryDB getLibrary() {
-        return library;
+    public List<LibraryDB> getLibraries() {
+        return libraries;
     }
 
-    public void setLibrary(LibraryDB library) {
-        this.library = library;
+    public void setLibraries(List<LibraryDB> libraries) {
+        this.libraries = libraries;
     }
 
     public List<UserCardDB> getUserCards() {
@@ -148,9 +137,8 @@ public class BookDB {
         private String publisher;
         private Integer publishYear;
         private Integer pages;
-        private Date receiptDate;
         private boolean availability;
-        private LibraryDB library;
+        private List<LibraryDB> libraries;
         private List<UserCardDB> userCards;
 
         private Builder() {
@@ -186,18 +174,13 @@ public class BookDB {
             return this;
         }
 
-        public Builder withReceiptDate(Date val) {
-            receiptDate = val;
-            return this;
-        }
-
         public Builder withAvailability(boolean val) {
             availability = val;
             return this;
         }
 
-        public Builder withLibrary(LibraryDB val) {
-            library = val;
+        public Builder withLibraries(List<LibraryDB> val) {
+            libraries = val;
             return this;
         }
 

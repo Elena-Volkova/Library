@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-3">
                 <spring:url value="/resources/core/images/logo.png" var="logoImg"/>
-                <img src="${logoImg}" alt="Logo">
+                <img src="${logoImg}" class="logo" alt="Logo">
             </div>
             <div class="col-md-9">
                 <h2>
@@ -40,7 +40,15 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">жырафик</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
                 <c:url value="/logout" var="logoutUrl"/>
                 <!-- csrt support -->
 
@@ -142,7 +150,7 @@
             </div>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Вы действительно хотите отменить?</p>
             <div class="modal-footer">
-                <a href="${pageContext.request.contextPath}/admin" role="button" class="btn btn-danger">Да</a>
+                <a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="btn btn-danger">Да</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Нет</button>
             </div>
         </div>

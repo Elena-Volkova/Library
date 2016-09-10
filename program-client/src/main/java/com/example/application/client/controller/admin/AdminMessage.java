@@ -7,7 +7,10 @@ public enum AdminMessage {
     LIBRARY_DELETED("Библиотека успешно удалена!"),
     USER_ADDED("Пользователь успешно добавлен!"),
     USER_UPDATED("Пользователь успешно обновлен!"),
-    USER_DELETED("Пользователь успешно удален!");
+    USER_DELETED("Пользователь успешно удален!"),
+    BOOK_ADDED("Книга успешно добавлена!"),
+    BOOK_UPDATED("Книга успешно обновлена!"),
+    BOOK_DELETED("Книга успешно удалена!");
 
     AdminMessage(String message) {
         this.message = message;

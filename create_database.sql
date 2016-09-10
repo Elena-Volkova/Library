@@ -52,14 +52,8 @@ CREATE TABLE `book` (
   `publisher`    VARCHAR(45)          DEFAULT NULL,
   `publish_year` INT(11)              DEFAULT NULL,
   `pages`        INT(11)              DEFAULT NULL,
-  `library_id`   BIGINT(20)  NOT NULL,
-  `receipt_date` DATETIME    NOT NULL,
   `availability` TINYINT(1)  NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `LIBRARY_BOOK_idx` (`library_id`),
-  CONSTRAINT `fk_book_library` FOREIGN KEY (`library_id`) REFERENCES `library` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
@@ -103,6 +97,27 @@ CREATE TABLE `library_user` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_library_user_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+--
+-- Table structure for table `library_book`
+--
+
+DROP TABLE IF EXISTS `library_book`;
+
+CREATE TABLE `library_book` (
+  `library_id` BIGINT(20) NOT NULL,
+  `book_id`    BIGINT(20) NOT NULL,
+  PRIMARY KEY (`library_id`, `book_id`),
+  KEY `fk_library_book_book_idx` (`book_id`),
+  CONSTRAINT `fk_library_book_library` FOREIGN KEY (`library_id`) REFERENCES `library` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_library_book_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )

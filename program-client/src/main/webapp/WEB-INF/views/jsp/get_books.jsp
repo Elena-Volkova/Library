@@ -41,13 +41,12 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <li class="active"><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">жырафик</a></li>
                 </ul>
             </div>
-            <div class="col-md-3">
                 <c:url value="/logout" var="logoutUrl"/>
                 <!-- csrt support -->
 
@@ -84,7 +83,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/admin/library" role="button" class="btn btn-success btn-large">Добавить</a>
+            <a href="${pageContext.request.contextPath}/admin/book" role="button" class="btn btn-success btn-large">Добавить</a>
         </div>
     </div>
     <div class="row">
@@ -95,26 +94,26 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Название библиотеки</th>
-                            <th>Страна</th>
-                            <th>Город</th>
-                            <th>Улица, номер дома</th>
-                            <th>Телефон</th>
+                            <th>Название</th>
+                            <th>Автор</th>
+                            <th>Издательство</th>
+                            <th>Год издания</th>
+                            <th>Количество страниц</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="library" items="${libraries}">
+                        <c:forEach var="book" items="${books}">
                             <tr>
-                                <th scope="row"><c:out value="${library.id}"/></th>
-                                <td><c:out value="${library.name}"/></td>
-                                <td><c:out value="${library.address.country}"/></td>
-                                <td><c:out value="${library.address.city}"/></td>
-                                <td><c:out value="${library.address.street}"/></td>
-                                <td><c:out value="${library.address.phone}"/></td>
+                                <th scope="row"><c:out value="${book.id}"/></th>
+                                <td><c:out value="${book.name}"/></td>
+                                <td><c:out value="${book.author}"/></td>
+                                <td><c:out value="${book.publisher}"/></td>
+                                <td><c:out value="${book.publishYear}"/></td>
+                                <td><c:out value="${book.pages}"/></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/library/${library.id}"
+                                    <a href="${pageContext.request.contextPath}/admin/book/${book.id}"
                                        role="button" class="btn btn-warning btn-large">Редактировать</a>
-                                    <button data-id="${library.id}" type="button" class="delete-button-class btn btn-danger btn-large"
+                                    <button data-id="${book.id}" type="button" class="delete-button-class btn btn-danger btn-large"
                                             data-toggle="modal"
                                             data-target=".bs-example-modal-lg">Удалить
                                     </button>
@@ -154,11 +153,11 @@
                 <h4 class="modal-title">Удаление</h4>
             </div>
             <div class="modal-body">
-                <p>Вы действительно хотите удалить библиотеку?</p>
+                <p>Вы действительно хотите удалить книгу?</p>
             </div>
             <div class="modal-footer">
                 <button type="button"
-                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/libraries/' + $('#currentId').val())"
+                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/books/' + $('#currentId').val())"
                         class="btn btn-danger">Удалить
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

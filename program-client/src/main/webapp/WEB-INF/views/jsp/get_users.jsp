@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-md-3">
                 <spring:url value="/resources/core/images/logo.png" var="logoImg"/>
-                <img src="${logoImg}" alt="Logo">
+                <img src="${logoImg}" class="logo" alt="Logo">
             </div>
             <div class="col-md-9">
                 <h2>
@@ -39,7 +39,15 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
+                <ul class="nav nav-pills">
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">жырафик</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
                 <c:url value="/logout" var="logoutUrl"/>
                 <!-- csrt support -->
 

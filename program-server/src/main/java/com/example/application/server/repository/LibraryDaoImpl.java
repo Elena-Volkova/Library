@@ -2,7 +2,6 @@ package com.example.application.server.repository;
 
 import com.example.application.server.repository.model.LibraryDB;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -33,9 +32,6 @@ public class LibraryDaoImpl extends AbstractDao implements LibraryDao {
     @Override
     public void deleteLibrary(LibraryDB library) {
         getSession().delete(library);
-/*        Query query = getSession().createSQLQuery("DELETE FROM library WHERE id = :id");
-        query.setLong("id", libraryId);
-        query.executeUpdate();*/
     }
 
     @Override

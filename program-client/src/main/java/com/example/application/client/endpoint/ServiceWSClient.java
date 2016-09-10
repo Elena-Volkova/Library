@@ -1,6 +1,5 @@
 package com.example.application.client.endpoint;
 
-import com.example.application.client.service.LibraryService;
 import com.example.application.client.service.model.*;
 import org.apache.log4j.Logger;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
@@ -8,9 +7,6 @@ import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import java.util.List;
 
-/**
- * User client
- */
 public class ServiceWSClient extends WebServiceGatewaySupport {
 
     private static final Logger LOGGER = Logger.getLogger(ServiceWSClient.class);
@@ -149,12 +145,76 @@ public class ServiceWSClient extends WebServiceGatewaySupport {
     public GetLibrariesResponse getLibraries() {
         GetLibrariesRequest request = new GetLibrariesRequest();
 
-        LOGGER.info("Requesting all users");
+        LOGGER.info("Requesting all libraries");
 
         return (GetLibrariesResponse) getWebServiceTemplate()
                 .marshalSendAndReceive(
                         WEBSERVICE_URL,
                         request,
                         new SoapActionCallback(WEBSERVICE_URL + "/GetLibrariesResponse"));
+    }
+
+    public SaveBookResponse saveBook(BookDTO book) {
+        SaveBookRequest request = new SaveBookRequest();
+        request.setBook(book);
+
+        LOGGER.info("Requesting save book");
+
+        return (SaveBookResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/SaveBookResponse"));
+    }
+
+    public UpdateBookResponse updateBook(BookDTO book) {
+        UpdateBookRequest request = new UpdateBookRequest();
+        request.setBook(book);
+
+        LOGGER.info("Requesting update book");
+
+        return (UpdateBookResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/UpdateBookResponse"));
+    }
+
+    public DeleteBookResponse deleteBook(Long bookId) {
+        DeleteBookRequest request = new DeleteBookRequest();
+        request.setBookId(bookId);
+
+        LOGGER.info("Requesting delete book for id = " + bookId);
+
+        return (DeleteBookResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/DeleteBookResponse"));
+    }
+
+    public GetBookByIdResponse getBookById(Long bookId) {
+        GetBookByIdRequest request = new GetBookByIdRequest();
+        request.setBookId(bookId);
+
+        LOGGER.info("Requesting book for id = " + bookId);
+
+        return (GetBookByIdResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/GetBookByIdResponse"));
+    }
+
+    public GetBooksResponse getBooks() {
+        GetBooksRequest request = new GetBooksRequest();
+
+        LOGGER.info("Requesting all books");
+
+        return (GetBooksResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/GetBooksResponse"));
     }
 }

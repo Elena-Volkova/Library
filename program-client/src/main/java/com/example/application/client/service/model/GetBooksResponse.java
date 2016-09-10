@@ -10,22 +10,22 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "libraries"
+        "books"
 })
-@XmlRootElement(name = "getLibrariesResponse")
-public class GetLibrariesResponse {
+@XmlRootElement(name = "getBooksResponse")
+public class GetBooksResponse {
 
     @XmlElement(required = true)
-    protected List<LibraryDTO> libraries;
+    protected List<BookDTO> books;
 
-    public List<LibraryDTO> getLibraries() {
-        if (libraries == null) {
-            libraries = new ArrayList<>();
+    public List<BookDTO> getBooks() {
+        if (books == null) {
+            books = new ArrayList<>();
         }
-        return this.libraries;
+        return this.books;
     }
 
-    public void setLibraries(List<LibraryDTO> libraries) {
-        this.libraries = libraries;
+    public void setBooks(List<BookDTO> books) {
+        this.books = books;
     }
 }

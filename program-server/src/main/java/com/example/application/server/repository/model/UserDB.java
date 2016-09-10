@@ -201,12 +201,12 @@ public class UserDB {
             return this;
         }
 
-        public Builder withLibrary(List<LibraryDB> val) {
+        public Builder withLibraries(List<LibraryDB> val) {
             libraries = val;
             return this;
         }
 
-        public Builder withUserCard(List<UserCardDB> val) {
+        public Builder withUserCards(List<UserCardDB> val) {
             userCards = val;
             return this;
         }

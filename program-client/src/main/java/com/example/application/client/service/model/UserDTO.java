@@ -3,8 +3,8 @@ package com.example.application.client.service.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user", propOrder = {
@@ -28,7 +28,7 @@ public class UserDTO {
     private String surname;
     private String patronymic;
     private AddressDTO address;
-    private List<LibraryDTO> libraries;
+    private List<LibraryDTO> libraries = new ArrayList<>();
 
     public UserDTO() {
     }
@@ -175,7 +175,7 @@ public class UserDTO {
             return this;
         }
 
-        public Builder withLibrary(List<LibraryDTO> val) {
+        public Builder withLibraries(List<LibraryDTO> val) {
             libraries = val;
             return this;
         }
