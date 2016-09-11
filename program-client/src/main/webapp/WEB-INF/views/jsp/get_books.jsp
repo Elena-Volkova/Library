@@ -100,6 +100,7 @@
                             <th>Издательство</th>
                             <th>Год издания</th>
                             <th>Количество страниц</th>
+                            <th>Библиотека</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -111,6 +112,7 @@
                                 <td><c:out value="${book.publisher}"/></td>
                                 <td><c:out value="${book.publishYear}"/></td>
                                 <td><c:out value="${book.pages}"/></td>
+                                <td><c:out value="${book.library.name}"/></td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/admin/book/${book.id}"
                                        role="button" class="btn btn-warning btn-large">Редактировать</a>

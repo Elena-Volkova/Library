@@ -1,7 +1,8 @@
-package com.example.application.client.controller.admin;
+package com.example.application.client.controller;
 
 import com.example.application.client.service.LibraryService;
 import com.example.application.client.service.SearchService;
+import com.example.application.client.service.UserService;
 import com.example.application.client.service.model.BookSearchDTO;
 import com.example.application.client.service.model.UserSearchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,13 @@ public class SearchController {
 
     private final LibraryService libraryService;
 
+    private final UserService userService;
+
     @Autowired
-    public SearchController(SearchService searchService, LibraryService libraryService) {
+    public SearchController(SearchService searchService, LibraryService libraryService, UserService userService) {
         this.searchService = searchService;
         this.libraryService = libraryService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/admin/users_search", method = RequestMethod.GET)
@@ -42,20 +46,22 @@ public class SearchController {
         return model;
     }
 
-    @RequestMapping(value = "/admin/books_search", method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin/books_search", "/user/books_search"}, method = RequestMethod.GET)
     public ModelAndView getBooksSearch() {
         ModelAndView model = new ModelAndView();
         model.addObject("search", new BookSearchDTO());
         model.addObject("allLibraries", libraryService.getLibraries());
+        model.addObject("role", userService.getCurrentUser().getRole());
         model.setViewName("get_books_search");
         return model;
     }
 
-    @RequestMapping(value = "/admin/books_search", method = RequestMethod.POST)
+    @RequestMapping(value = {"/admin/books_search", "/user/books_search"}, method = RequestMethod.POST)
     public ModelAndView performBooksSearch(@ModelAttribute BookSearchDTO search) {
         ModelAndView model = new ModelAndView();
         model.addObject("search", searchService.searchBooks(search));
         model.addObject("allLibraries", libraryService.getLibraries());
+        model.addObject("role", userService.getCurrentUser().getRole());
         model.setViewName("get_books_search");
         return model;
     }

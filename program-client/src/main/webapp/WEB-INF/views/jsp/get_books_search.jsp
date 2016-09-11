@@ -42,11 +42,20 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                    <li class="active"><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
+                    <c:choose>
+                        <c:when test="${role == 'ADMIN'}">
+                            <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                            <li class="active"><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="active"><a href="${pageContext.request.contextPath}/user/books_search" role="button" class="">Поиск книг</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/tracking" role="button" class="">Я читаю</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/user" role="button" class="">Мой профиль</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
                 <c:url value="/logout" var="logoutUrl"/>
@@ -140,6 +149,7 @@
                             <th>Издательство</th>
                             <th>Год издания</th>
                             <th>Количество страниц</th>
+                            <th>Доступность</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -151,6 +161,14 @@
                                 <td><c:out value="${book.publisher}"/></td>
                                 <td><c:out value="${book.publishYear}"/></td>
                                 <td><c:out value="${book.pages}"/></td>
+                                <td><c:choose>
+                                    <c:when test="${book.availability}">
+                                        Да
+                                    </c:when>
+                                    <c:otherwise>
+                                        Нет
+                                    </c:otherwise>
+                                </c:choose></td>
                             </tr>
                         </c:forEach>
                         </tbody>

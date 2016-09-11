@@ -16,6 +16,7 @@ public class BookBuilderUtil {
                 .withPublishYear(book.getPublishYear())
                 .withPages(book.getPages())
                 .withAvailability(book.isAvailability())
+                .withLibrary(LibraryBuilderUtil.convertLibraryToLibraryDB(book.getLibrary()))
                 .build();
     }
 
@@ -31,7 +32,7 @@ public class BookBuilderUtil {
                     .withPublishYear(book.getPublishYear())
                     .withPages(book.getPages())
                     .withAvailability(book.isAvailability())
-                    .withLibraries(book.getLibraries() != null ? LibraryBuilderUtil.convertLibrariesDBToLibraries(book.getLibraries()) : null)
+                    .withLibrary(LibraryBuilderUtil.convertLibraryDBToLibrary(book.getLibrary()))
                     .build();
         }
     }
@@ -43,5 +44,4 @@ public class BookBuilderUtil {
         bookDB.setPages(bookDTO.getPages());
         bookDB.setAvailability(bookDTO.isAvailability());
     }
-
 }

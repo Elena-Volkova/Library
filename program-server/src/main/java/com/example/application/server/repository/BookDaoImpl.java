@@ -53,8 +53,8 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
             criteria.add(Restrictions.eq("publisher", search.getPublisher()));
         }
         if (search.getLibrary() != null) {
-            criteria.createAlias("libraries", "libraries");
-            criteria.add(Restrictions.eq("libraries.id", search.getLibrary().getId()));
+            criteria.createAlias("library", "library");
+            criteria.add(Restrictions.eq("library.id", search.getLibrary().getId()));
         }
         return (List<BookDB>) criteria.list();
     }

@@ -1,6 +1,6 @@
-package com.example.application.client.controller.admin;
+package com.example.application.client.controller;
 
-public enum AdminMessage {
+public enum UserMessage {
 
     LIBRARY_ADDED("Библиотека успешно добавлена!"),
     LIBRARY_UPDATED("Библиотека успешно обновлена!"),
@@ -12,7 +12,7 @@ public enum AdminMessage {
     BOOK_UPDATED("Книга успешно обновлена!"),
     BOOK_DELETED("Книга успешно удалена!");
 
-    AdminMessage(String message) {
+    UserMessage(String message) {
         this.message = message;
     }
 

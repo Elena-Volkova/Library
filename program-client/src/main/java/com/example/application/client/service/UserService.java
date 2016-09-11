@@ -18,4 +18,6 @@ public interface UserService {
     List<UserDTO> getUsers(List<RoleEnum> roles);
 
     UserDTO getUserByUsername(String username);
+
+    UserDTO getCurrentUser();
 }

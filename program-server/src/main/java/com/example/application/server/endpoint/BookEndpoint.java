@@ -4,7 +4,6 @@ import com.example.application.server.model.action.*;
 import com.example.application.server.repository.BookDao;
 import com.example.application.server.repository.LibraryDao;
 import com.example.application.server.repository.model.BookDB;
-import com.example.application.server.repository.model.LibraryDB;
 import com.example.application.server.util.BookBuilderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,11 +35,7 @@ public class BookEndpoint {
     @Transactional
     public SaveBookResponse saveBookRequest(@RequestPayload SaveBookRequest request) {
         SaveBookResponse response = new SaveBookResponse();
-        List<LibraryDB> libraries = request.getBook().getLibraries().stream()
-                .map(libraryDTO -> libraryDao.findById(libraryDTO.getId()))
-                .collect(Collectors.toList());
         BookDB book = BookBuilderUtil.convertBookToBookDB(request.getBook());
-        book.setLibraries(libraries);
         bookDao.saveBook(book);
         response.setResult(Boolean.TRUE);
         return response;
@@ -51,12 +46,9 @@ public class BookEndpoint {
     @Transactional
     public UpdateBookResponse updateBookRequest(@RequestPayload UpdateBookRequest request) {
         UpdateBookResponse response = new UpdateBookResponse();
-        List<LibraryDB> libraries = request.getBook().getLibraries().stream()
-                .map(libraryDTO -> libraryDao.findById(libraryDTO.getId()))
-                .collect(Collectors.toList());
         BookDB book = bookDao.findById(request.getBook().getId());
         BookBuilderUtil.mergeBookWithBookDB(book, request.getBook());
-        book.setLibraries(libraries);
+        book.setLibrary(libraryDao.findById(request.getBook().getLibrary().getId()));
         bookDao.updateBook(book);
 
         response.setResult(Boolean.TRUE);

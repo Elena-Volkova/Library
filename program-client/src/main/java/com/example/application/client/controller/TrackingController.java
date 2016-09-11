@@ -1,71 +1,71 @@
-package com.example.application.client.controller.admin;
+package com.example.application.client.controller;
 
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class TrackingController {
-/*
-    private final BookService trackingService;
 
-    private final LibraryService libraryService;*/
+/*    private final TrackingService trackingService;
 
-    /*@Autowired
-    public TrackingController(BookService trackingService, LibraryService libraryService) {
+    private final LibraryService libraryService;
+
+    @Autowired
+    public TrackingController(TrackingService trackingService, LibraryService libraryService) {
         this.trackingService = trackingService;
         this.libraryService = libraryService;
     }
 
     @RequestMapping(value = "/admin/trackings", method = RequestMethod.GET)
-    public ModelAndView getBooks(@RequestParam(required = false) AdminMessage message) {
+    public ModelAndView getTrackings(@RequestParam(required = false) UserMessage message) {
         ModelAndView model = new ModelAndView();
         if (message != null) {
             model.addObject("msg", message.getMessage());
         }
-        model.addObject("trackings", trackingService.getBooks());
+        model.addObject("trackings", trackingService.getTrackings());
         model.setViewName("statistic");
         return model;
     }
 
     @RequestMapping(value = "/admin/tracking", method = RequestMethod.GET)
-    public ModelAndView getBook() {
+    public ModelAndView getTracking() {
         ModelAndView model = new ModelAndView();
-        model.addObject("tracking", new BookDTO());
+        model.addObject("tracking", new TrackingDTO());
         model.addObject("allLibraries", libraryService.getLibraries());
         model.setViewName("add_tracking");
         return model;
     }
 
-    @RequestMapping(value = "/admin/tracking/{trackingId}", method = RequestMethod.GET)
-    public ModelAndView getBook(@PathVariable Long trackingId) {
+    @RequestMapping(value = "/admin/tracking/library{libraryId}/user/{userId}", method = RequestMethod.GET)
+    public ModelAndView getTracking(@PathVariable Long libraryId, @PathVariable Long userId) {
         ModelAndView model = new ModelAndView();
-        model.addObject("tracking", trackingService.getBook(trackingId));
+        model.addObject("tracking", trackingService.getTracking(trackingId));
         model.addObject("allLibraries", libraryService.getLibraries());
         model.setViewName("add_tracking");
         return model;
     }
 
     @RequestMapping(value = "/admin/tracking", method = RequestMethod.POST)
-    public ModelAndView addBook(@ModelAttribute BookDTO tracking) {
+    public ModelAndView addTracking(@ModelAttribute TrackingDTO tracking) {
         tracking.setAvailability(true);
         trackingService.add(tracking);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin/trackings?message=" + AdminMessage.BOOK_ADDED);
+        model.setViewName("redirect:/admin/trackings?message=" + UserMessage.BOOK_ADDED);
         return model;
     }
 
     @RequestMapping(value = "/admin/tracking/{trackingId}", method = RequestMethod.POST)
-    public ModelAndView updateBook(@PathVariable Long trackingId, @ModelAttribute BookDTO trackingDTO) {
+    public ModelAndView updateTracking(@PathVariable Long trackingId, @ModelAttribute TrackingDTO trackingDTO) {
         trackingService.update(trackingDTO);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin/trackings?message=" + AdminMessage.BOOK_UPDATED);
+        model.setViewName("redirect:/admin/trackings?message=" + UserMessage.BOOK_UPDATED);
         return model;
     }
 
     @RequestMapping(value = "/admin/trackings/{trackingId}", method = RequestMethod.GET)
-    public ModelAndView deleteBook(@PathVariable Long trackingId) {
+    public ModelAndView deleteTracking(@PathVariable Long trackingId) {
         ModelAndView model = new ModelAndView();
         trackingService.delete(trackingId);
-        model.setViewName("redirect:/admin/trackings?message=" + AdminMessage.BOOK_DELETED);
+        model.setViewName("redirect:/admin/trackings?message=" + UserMessage.BOOK_DELETED);
         return model;
     }*/
 }

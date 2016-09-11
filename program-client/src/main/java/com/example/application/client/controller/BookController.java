@@ -1,4 +1,4 @@
-package com.example.application.client.controller.admin;
+package com.example.application.client.controller;
 
 import com.example.application.client.service.BookService;
 import com.example.application.client.service.LibraryService;
@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/admin/books", method = RequestMethod.GET)
-    public ModelAndView getBooks(@RequestParam(required = false) AdminMessage message) {
+    public ModelAndView getBooks(@RequestParam(required = false) UserMessage message) {
         ModelAndView model = new ModelAndView();
         if (message != null) {
             model.addObject("msg", message.getMessage());
@@ -59,7 +59,7 @@ public class BookController {
         book.setAvailability(true);
         bookService.add(book);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin/books?message=" + AdminMessage.BOOK_ADDED);
+        model.setViewName("redirect:/admin/books?message=" + UserMessage.BOOK_ADDED);
         return model;
     }
 
@@ -67,7 +67,7 @@ public class BookController {
     public ModelAndView updateBook(@PathVariable Long bookId, @ModelAttribute BookDTO bookDTO) {
         bookService.update(bookDTO);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin/books?message=" + AdminMessage.BOOK_UPDATED);
+        model.setViewName("redirect:/admin/books?message=" + UserMessage.BOOK_UPDATED);
         return model;
     }
 
@@ -75,7 +75,7 @@ public class BookController {
     public ModelAndView deleteBook(@PathVariable Long bookId) {
         ModelAndView model = new ModelAndView();
         bookService.delete(bookId);
-        model.setViewName("redirect:/admin/books?message=" + AdminMessage.BOOK_DELETED);
+        model.setViewName("redirect:/admin/books?message=" + UserMessage.BOOK_DELETED);
         return model;
     }
 }

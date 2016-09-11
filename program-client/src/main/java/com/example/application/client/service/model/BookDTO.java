@@ -3,8 +3,6 @@ package com.example.application.client.service.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "book", propOrder = {
@@ -15,7 +13,7 @@ import java.util.List;
         "publishYear",
         "pages",
         "availability",
-        "libraries"
+        "library"
 })
 public class BookDTO {
 
@@ -26,7 +24,7 @@ public class BookDTO {
     private Integer publishYear;
     private Integer pages;
     private boolean availability;
-    private List<LibraryDTO> libraries = new ArrayList<>();
+    private LibraryDTO library;
 
     public BookDTO() {
     }
@@ -39,7 +37,7 @@ public class BookDTO {
         setPublishYear(builder.publishYear);
         setPages(builder.pages);
         setAvailability(builder.availability);
-        setLibraries(builder.libraries);
+        setLibrary(builder.library);
     }
 
     public static Builder newBuilder() {
@@ -102,12 +100,12 @@ public class BookDTO {
         this.availability = availability;
     }
 
-    public List<LibraryDTO> getLibraries() {
-        return libraries;
+    public LibraryDTO getLibrary() {
+        return library;
     }
 
-    public void setLibraries(List<LibraryDTO> libraries) {
-        this.libraries = libraries;
+    public void setLibrary(LibraryDTO library) {
+        this.library = library;
     }
 
     public static final class Builder {
@@ -118,7 +116,7 @@ public class BookDTO {
         private Integer publishYear;
         private Integer pages;
         private boolean availability;
-        private List<LibraryDTO> libraries;
+        private LibraryDTO library;
 
         private Builder() {
         }
@@ -158,8 +156,8 @@ public class BookDTO {
             return this;
         }
 
-        public Builder withLibraries(List<LibraryDTO> val) {
-            libraries = val;
+        public Builder withLibrary(LibraryDTO val) {
+            library = val;
             return this;
         }
 

@@ -30,11 +30,9 @@ public class BookDB {
     @Column(name = "availability")
     private boolean availability;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "library_book",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "library_id")})
-    private List<LibraryDB> libraries;
+    @ManyToOne
+    @JoinColumn(name = "library_id", nullable = false)
+    private LibraryDB library;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
     private List<UserCardDB> userCards;
@@ -50,7 +48,7 @@ public class BookDB {
         setPublishYear(builder.publishYear);
         setPages(builder.pages);
         setAvailability(builder.availability);
-        setLibraries(builder.libraries);
+        setLibrary(builder.library);
         setUserCards(builder.userCards);
     }
 
@@ -114,12 +112,12 @@ public class BookDB {
         this.availability = availability;
     }
 
-    public List<LibraryDB> getLibraries() {
-        return libraries;
+    public LibraryDB getLibrary() {
+        return library;
     }
 
-    public void setLibraries(List<LibraryDB> libraries) {
-        this.libraries = libraries;
+    public void setLibrary(LibraryDB library) {
+        this.library = library;
     }
 
     public List<UserCardDB> getUserCards() {
@@ -138,7 +136,7 @@ public class BookDB {
         private Integer publishYear;
         private Integer pages;
         private boolean availability;
-        private List<LibraryDB> libraries;
+        private LibraryDB library;
         private List<UserCardDB> userCards;
 
         private Builder() {
@@ -179,8 +177,8 @@ public class BookDB {
             return this;
         }
 
-        public Builder withLibraries(List<LibraryDB> val) {
-            libraries = val;
+        public Builder withLibrary(LibraryDB val) {
+            library = val;
             return this;
         }
 

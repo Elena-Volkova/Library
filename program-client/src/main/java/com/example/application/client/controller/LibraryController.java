@@ -1,5 +1,6 @@
-package com.example.application.client.controller.admin;
+package com.example.application.client.controller;
 
+import com.example.application.client.controller.UserMessage;
 import com.example.application.client.service.LibraryService;
 import com.example.application.client.service.model.LibraryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class LibraryController {
     }
 
     @RequestMapping(value = "/admin/libraries", method = RequestMethod.GET)
-    public ModelAndView getLibraries(@RequestParam(required = false) AdminMessage message) {
+    public ModelAndView getLibraries(@RequestParam(required = false) UserMessage message) {
         ModelAndView model = new ModelAndView();
         if (message != null) {
             model.addObject("msg", message.getMessage());
@@ -52,7 +53,7 @@ public class LibraryController {
     public ModelAndView addLibrary(@ModelAttribute LibraryDTO library) {
         libraryService.add(library);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin/libraries?message=" + AdminMessage.LIBRARY_ADDED);
+        model.setViewName("redirect:/admin/libraries?message=" + UserMessage.LIBRARY_ADDED);
         return model;
     }
 
@@ -60,7 +61,7 @@ public class LibraryController {
     public ModelAndView updateLibrary(@PathVariable Long libraryId, @ModelAttribute LibraryDTO libraryDTO) {
         libraryService.update(libraryDTO);
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/admin/libraries?message=" + AdminMessage.LIBRARY_UPDATED);
+        model.setViewName("redirect:/admin/libraries?message=" + UserMessage.LIBRARY_UPDATED);
         return model;
     }
 
@@ -68,7 +69,7 @@ public class LibraryController {
     public ModelAndView deleteLibrary(@PathVariable Long libraryId) {
         ModelAndView model = new ModelAndView();
         libraryService.delete(libraryId);
-        model.setViewName("redirect:/admin/libraries?message=" + AdminMessage.LIBRARY_DELETED);
+        model.setViewName("redirect:/admin/libraries?message=" + UserMessage.LIBRARY_DELETED);
         return model;
     }
 }

@@ -160,7 +160,7 @@
                                 <td><c:out value="${user.address.street}"/></td>
                                 <td><c:out value="${user.address.phone}"/></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/users_search/${user.id}"
+                                    <a href="${pageContext.request.contextPath}/admin/tracking/library/${search.library.id}/user/${user.id}"
                                        role="button" class="btn btn-warning btn-large">Выдать книгу</a>
                                 </td>
                             </tr>

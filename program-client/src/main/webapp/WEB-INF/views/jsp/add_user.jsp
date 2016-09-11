@@ -42,11 +42,20 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
-                    <li class="active"><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
+                    <c:choose>
+                        <c:when test="${role == 'ADMIN'}">
+                            <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                            <li class="active"><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
+                            <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="${pageContext.request.contextPath}/user/books_search" role="button" class="">Поиск книг</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/tracking" role="button" class="">Я читаю</a></li>
+                            <li class="active"><a href="${pageContext.request.contextPath}/user/user" role="button" class="">Мой профиль</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
                 <c:url value="/logout" var="logoutUrl"/>
@@ -75,6 +84,14 @@
 
 
 <div class="container">
+    <c:if test="${not empty msg}">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="msg">${msg}</div>
+            </div>
+        </div>
+    </c:if>
+
     <form:form modelAttribute="user" method="post">
         <div class="row">
             <div class="col-md-12">
@@ -88,12 +105,22 @@
                             <form:label path="login">Логин:</form:label>
                             <form:input path="login" required="true" cssClass="form-control"/>
                         </div>
-                        <c:if test="${empty user.id}">
-                            <div class="form-group">
-                                <form:label path="password">Пароль:</form:label>
-                                <form:input path="password" type="password" required="true" cssClass="form-control" autocomplete="new-password"/>
-                            </div>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${role == 'ADMIN'}">
+                                <c:if test="${empty user.id}">
+                                    <div class="form-group">
+                                        <form:label path="password">Пароль:</form:label>
+                                        <form:input path="password" type="password" required="true" cssClass="form-control" autocomplete="new-password"/>
+                                    </div>
+                                </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <form:label path="password">Пароль:</form:label>
+                                    <form:input path="password" type="password" required="true" cssClass="form-control" autocomplete="new-password"/>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="form-group">
                             <form:label path="surname">Фамилия:</form:label>
                             <form:input path="surname" required="true" cssClass="form-control"/>
@@ -106,27 +133,31 @@
                             <form:label path="patronymic">Отчество:</form:label>
                             <form:input path="patronymic" required="true" cssClass="form-control"/>
                         </div>
-                        <div class="form-group">
-                            <form:label path="role">Роль:</form:label>
-                            <form:select path="role" required="true" cssClass="form-control">
-                                <c:choose>
-                                    <c:when test="${user.role == 'ADMIN'}">
-                                        <form:option value="ADMIN" selected="true">Администратор</form:option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <form:option value="ADMIN">Администратор</form:option>
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:choose>
-                                    <c:when test="${user.role == 'USER'}">
-                                        <form:option value="USER" selected="true">Пользователь</form:option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <form:option value="USER">Пользователь</form:option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </form:select>
-                        </div>
+                        <c:choose>
+                            <c:when test="${role == 'ADMIN'}">
+                                <div class="form-group">
+                                    <form:label path="role">Роль:</form:label>
+                                    <form:select path="role" required="true" cssClass="form-control">
+                                        <c:choose>
+                                            <c:when test="${user.role == 'ADMIN'}">
+                                                <form:option value="ADMIN" selected="true">Администратор</form:option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <form:option value="ADMIN">Администратор</form:option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <c:choose>
+                                            <c:when test="${user.role == 'USER'}">
+                                                <form:option value="USER" selected="true">Пользователь</form:option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <form:option value="USER">Пользователь</form:option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </form:select>
+                                </div>
+                            </c:when>
+                        </c:choose>
                         <div class="form-group">
                             <form:label path="address.country">Страна:</form:label>
                             <form:input path="address.country" required="true" cssClass="form-control"/>
@@ -143,20 +174,24 @@
                             <form:label path="address.phone">Телефон:</form:label>
                             <form:input path="address.phone" required="true" cssClass="form-control"/>
                         </div>
-                        <div class="form-group">
-                            <form:select path="libraries" multiple="true" cssClass="form-control">
-                                <c:forEach var="library" items="${allLibraries}">
-                                    <c:choose>
-                                        <c:when test="${user.libraries.contains(library)}">
-                                            <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </form:select>
-                        </div>
+                        <c:choose>
+                            <c:when test="${role == 'ADMIN'}">
+                                <div class="form-group">
+                                    <form:select path="libraries" multiple="true" cssClass="form-control">
+                                        <c:forEach var="library" items="${allLibraries}">
+                                            <c:choose>
+                                                <c:when test="${user.libraries.contains(library)}">
+                                                    <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                    </form:select>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
             </div>

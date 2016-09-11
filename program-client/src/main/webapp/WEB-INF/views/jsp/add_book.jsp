@@ -42,34 +42,39 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
-                    <li class="active"><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button"
+                           class="">Библиотеки</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a>
+                    </li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск
+                        книг</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача
+                        книг</a></li>
                 </ul>
             </div>
-                <c:url value="/logout" var="logoutUrl"/>
-                <!-- csrt support -->
+            <c:url value="/logout" var="logoutUrl"/>
+            <!-- csrt support -->
 
-                <form action="${logoutUrl}" method="post" id="logoutForm">
-                    <input type="hidden"
-                           name="${_csrf.parameterName}"
-                           value="${_csrf.token}"/>
-                </form>
-                <script>
-                    function formSubmit() {
-                        document.getElementById("logoutForm").submit();
-                    }
-                </script>
-                <p class="text-right">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        Добро пожаловать : ${pageContext.request.userPrincipal.name} | <a
-                            href="javascript:formSubmit()"> Выйти</a>
-                    </c:if>
-                </p>
-            </div>
+            <form action="${logoutUrl}" method="post" id="logoutForm">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+            </form>
+            <script>
+                function formSubmit() {
+                    document.getElementById("logoutForm").submit();
+                }
+            </script>
+            <p class="text-right">
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    Добро пожаловать : ${pageContext.request.userPrincipal.name} | <a
+                        href="javascript:formSubmit()"> Выйти</a>
+                </c:if>
+            </p>
         </div>
+    </div>
     </div>
 </nav>
 
@@ -104,15 +109,18 @@
                             <form:label path="pages">Количество страниц:</form:label>
                             <form:input path="pages" required="true" cssClass="form-control"/>
                         </div>
-                         <div class="form-group">
-                            <form:select path="libraries" multiple="true" cssClass="form-control">
+                        <div class="form-group">
+                            <form:label path="library">Библиотека:</form:label>
+                            <form:select path="library" cssClass="form-control">
                                 <c:forEach var="library" items="${allLibraries}">
                                     <c:choose>
-                                        <c:when test="${book.libraries.contains(library)}">
-                                            <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
+                                        <c:when test="${book.library.equals(library)}">
+                                            <form:option value="${library.id}" selected="true"><c:out
+                                                    value="${library.name}"/></form:option>
                                         </c:when>
                                         <c:otherwise>
-                                            <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
+                                            <form:option value="${library.id}"><c:out
+                                                    value="${library.name}"/></form:option>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>

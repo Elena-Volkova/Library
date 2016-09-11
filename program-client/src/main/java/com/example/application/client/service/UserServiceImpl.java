@@ -4,6 +4,7 @@ import com.example.application.client.endpoint.ServiceWSClient;
 import com.example.application.client.service.model.RoleEnum;
 import com.example.application.client.service.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +47,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByUsername(String username) {
         return serviceWSClient.getUserByUsername(username).getUser();
+    }
+
+    @Override
+    public UserDTO getCurrentUser() {
+        String userLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        return serviceWSClient.getUserByUsername(userLogin).getUser();
     }
 }

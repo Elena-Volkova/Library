@@ -18,7 +18,7 @@ public class LibraryDB {
     @JoinColumn(name = "address_id")
     private AddressDB address;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "libraries", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "library", orphanRemoval = true)
     private List<BookDB> books = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "libraries", cascade = CascadeType.ALL)
