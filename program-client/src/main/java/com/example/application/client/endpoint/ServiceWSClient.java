@@ -217,4 +217,30 @@ public class ServiceWSClient extends WebServiceGatewaySupport {
                         request,
                         new SoapActionCallback(WEBSERVICE_URL + "/GetBooksResponse"));
     }
+
+    public SearchUsersResponse searchUsers(UserSearchDTO userSearch) {
+        SearchUsersRequest request = new SearchUsersRequest();
+        request.setSearch(userSearch);
+
+        LOGGER.info("Requesting searchBooks users");
+
+        return (SearchUsersResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/SearchUsersResponse"));
+    }
+
+    public SearchBooksResponse searchBooks(BookSearchDTO bookSearch) {
+        SearchBooksRequest request = new SearchBooksRequest();
+        request.setSearch(bookSearch);
+
+        LOGGER.info("Requesting searchBooks books");
+
+        return (SearchBooksResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/SearchBooksResponse"));
+    }
 }

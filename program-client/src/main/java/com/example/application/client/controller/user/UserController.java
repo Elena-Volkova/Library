@@ -1,8 +1,7 @@
 package com.example.application.client.controller.user;
 
 import com.example.application.client.service.UserService;
-import com.example.application.client.service.model.RoleEnum;
-import com.example.application.client.service.model.Search;
+import com.example.application.client.service.model.UserSearchDTO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Arrays;
 
 /**
  * User Controller
@@ -44,7 +41,7 @@ public class UserController {
         if (successDelete) {
             model.addObject("msg", "Производство успешно удалено!");
         }
-        model.addObject("search", new Search());
+        model.addObject("search", new UserSearchDTO());
 /*        List<Process> processes = processService.getProcesses(new Search());
         model.addObject("processes", processes);
         model.addObject("count", processes.size());*/
@@ -53,13 +50,13 @@ public class UserController {
     }
 
 /*    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ModelAndView search(@ModelAttribute Search search) {
+    public ModelAndView searchBooks(@ModelAttribute Search searchBooks) {
         ModelAndView model = new ModelAndView();
-        List<Process> processes = processService.getProcesses(search);
+        List<Process> processes = processService.getProcesses(searchBooks);
         model.addObject("processes", processes);
         model.addObject("count", processes.size());
         model.addObject("users", userService.getUsers());
-        model.addObject("search", search);
+        model.addObject("searchBooks", searchBooks);
         model.setViewName("user");
         return model;
     }
@@ -120,7 +117,7 @@ public class UserController {
     @RequestMapping(value = "/user/statistic", method = RequestMethod.GET)
     public ModelAndView statistic() {
         ModelAndView model = new ModelAndView();
-        model.addObject("search", new StatisticSearch());
+        model.addObject("searchBooks", new StatisticSearch());
         List<Process> processes = processService.getProcesses(new Search());
         model.addObject("processes", processes);
         model.addObject("count", processes.size());
@@ -130,13 +127,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/statistic", method = RequestMethod.POST)
-    public ModelAndView statisticSearch(@ModelAttribute StatisticSearch search) {
+    public ModelAndView statisticSearch(@ModelAttribute StatisticSearch searchBooks) {
         ModelAndView model = new ModelAndView();
-        List<Process> processes = processService.getProcesses(search);
+        List<Process> processes = processService.getProcesses(searchBooks);
         model.addObject("processes", processes);
         model.addObject("count", processes.size());
         model.addObject("users", userService.getUsers());
-        model.addObject("search", search);
+        model.addObject("searchBooks", searchBooks);
         model.setViewName("statistic");
         return model;
     }

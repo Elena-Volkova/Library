@@ -1,6 +1,7 @@
 package com.example.application.server.repository;
 
 import com.example.application.server.model.RoleEnum;
+import com.example.application.server.model.UserSearchDTO;
 import com.example.application.server.repository.model.UserDB;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -42,6 +43,25 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public void updateUser(UserDB user) {
         getSession().update(user);
+    }
+
+    @Override
+    public List<UserDB> findUsersBySearchDTO(UserSearchDTO search) {
+        Criteria criteria = getSession().createCriteria(UserDB.class);
+        if (!search.getName().isEmpty()) {
+            criteria.add(Restrictions.eq("name", search.getName()));
+        }
+        if (!search.getSurname().isEmpty()) {
+            criteria.add(Restrictions.eq("surname", search.getSurname()));
+        }
+        if (!search.getPatronymic().isEmpty()) {
+            criteria.add(Restrictions.eq("patronymic", search.getPatronymic()));
+        }
+        if (search.getLibrary() != null) {
+            criteria.createAlias("libraries", "libraries");
+            criteria.add(Restrictions.eq("libraries.id", search.getLibrary().getId()));
+        }
+        return (List<UserDB>) criteria.list();
     }
 
     @Override

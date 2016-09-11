@@ -139,4 +139,20 @@ public class ObjectFactory {
     public GetBooksResponse createGetBooksResponse() {
         return new GetBooksResponse();
     }
+
+    public SearchUsersRequest createSearchUsersRequest() {
+        return new SearchUsersRequest();
+    }
+
+    public SearchUsersResponse createSearchUsersResponse() {
+        return new SearchUsersResponse();
+    }
+
+    public SearchBooksRequest createSearchBooksRequest() {
+        return new SearchBooksRequest();
+    }
+
+    public SearchBooksResponse createSearchBooksResponse() {
+        return new SearchBooksResponse();
+    }
 }

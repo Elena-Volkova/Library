@@ -44,7 +44,8 @@
                     <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
                     <li class="active"><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">жырафик</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
                 </ul>
             </div>
                 <c:url value="/logout" var="logoutUrl"/>

@@ -1,5 +1,6 @@
 package com.example.application.server.repository;
 
+import com.example.application.server.model.BookSearchDTO;
 import com.example.application.server.repository.model.BookDB;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface BookDao {
 
     void updateBook(BookDB book);
 
+    List<BookDB> findBooksBySearchDTO(BookSearchDTO search);
 }

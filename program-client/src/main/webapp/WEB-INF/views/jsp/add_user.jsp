@@ -45,7 +45,8 @@
                     <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
                     <li class="active"><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">жырафик</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
                 </ul>
             </div>
                 <c:url value="/logout" var="logoutUrl"/>
@@ -143,7 +144,7 @@
                             <form:input path="address.phone" required="true" cssClass="form-control"/>
                         </div>
                         <div class="form-group">
-                            <form:select path="libraries" multiple="true">
+                            <form:select path="libraries" multiple="true" cssClass="form-control">
                                 <c:forEach var="library" items="${allLibraries}">
                                     <c:choose>
                                         <c:when test="${user.libraries.contains(library)}">

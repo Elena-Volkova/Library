@@ -41,11 +41,11 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <li class="active"><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
@@ -85,18 +85,37 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/admin/library" role="button" class="btn btn-success btn-large">Добавить</a>
+            <a href="${pageContext.request.contextPath}/admin/user" role="button" class="btn btn-success btn-large">Добавить</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <div class="form-group">
+                        <form:select path="libraries" multiple="true" cssClass="form-control">
+                            <c:forEach var="library" items="${allLibraries}">
+                                <c:choose>
+                                    <c:when test="${user.libraries.contains(library)}">
+                                        <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </form:select>
+                    </div>
+
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Название библиотеки</th>
+                            <th>Логин</th>
+                            <th>Фамилия</th>
+                            <th>Имя</th>
+                            <th>Отчество</th>
+                            <th>Роль</th>
                             <th>Страна</th>
                             <th>Город</th>
                             <th>Улица, номер дома</th>
@@ -104,18 +123,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="library" items="${libraries}">
+                        <c:forEach var="user" items="${users}">
                             <tr>
-                                <th scope="row"><c:out value="${library.id}"/></th>
-                                <td><c:out value="${library.name}"/></td>
-                                <td><c:out value="${library.address.country}"/></td>
-                                <td><c:out value="${library.address.city}"/></td>
-                                <td><c:out value="${library.address.street}"/></td>
-                                <td><c:out value="${library.address.phone}"/></td>
+                                <th scope="row"><c:out value="${user.id}"/></th>
+                                <td><c:out value="${user.login}"/></td>
+                                <td><c:out value="${user.surname}"/></td>
+                                <td><c:out value="${user.name}"/></td>
+                                <td><c:out value="${user.patronymic}"/></td>
+                                <td><c:out value="${user.role}"/></td>
+                                <td><c:out value="${user.address.country}"/></td>
+                                <td><c:out value="${user.address.city}"/></td>
+                                <td><c:out value="${user.address.street}"/></td>
+                                <td><c:out value="${user.address.phone}"/></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/admin/library/${library.id}"
+                                    <a href="${pageContext.request.contextPath}/admin/user/${user.id}"
                                        role="button" class="btn btn-warning btn-large">Редактировать</a>
-                                    <button data-id="${library.id}" type="button" class="delete-button-class btn btn-danger btn-large"
+                                    <button data-id="${user.id}" type="button" class="delete-button-class btn btn-danger btn-large"
                                             data-toggle="modal"
                                             data-target=".bs-example-modal-lg">Удалить
                                     </button>
@@ -155,11 +178,11 @@
                 <h4 class="modal-title">Удаление</h4>
             </div>
             <div class="modal-body">
-                <p>Вы действительно хотите удалить библиотеку?</p>
+                <p>Вы действительно хотите удалить пользователя?</p>
             </div>
             <div class="modal-footer">
                 <button type="button"
-                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/libraries/' + $('#currentId').val())"
+                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/users/' + $('#currentId').val())"
                         class="btn btn-danger">Удалить
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

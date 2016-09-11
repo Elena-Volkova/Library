@@ -1,6 +1,7 @@
 package com.example.application.server.repository;
 
 import com.example.application.server.model.RoleEnum;
+import com.example.application.server.model.UserSearchDTO;
 import com.example.application.server.repository.model.UserDB;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public interface UserDao {
 
     void updateUser(UserDB user);
 
+    List<UserDB> findUsersBySearchDTO(UserSearchDTO search);
 }

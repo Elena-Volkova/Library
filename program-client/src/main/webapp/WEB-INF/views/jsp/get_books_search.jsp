@@ -2,10 +2,11 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Список библиотек</title>
+    <title>Добавить сотрудника</title>
     <spring:url value="/resources/core/css/hello.css" var="coreCss"/>
     <spring:url value="/resources/core/css/bootstrap.min.css" var="bootstrapCss"/>
     <spring:url value="/resources/core/css/bootstrap-theme.min.css" var="bootstrapThemeCss"/>
@@ -41,14 +42,13 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <li class="active"><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
                     <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
                 </ul>
             </div>
-            <div class="col-md-3">
                 <c:url value="/logout" var="logoutUrl"/>
                 <!-- csrt support -->
 
@@ -73,21 +73,60 @@
     </div>
 </nav>
 
-
 <div class="container">
-    <c:if test="${not empty msg}">
+    <form:form modelAttribute="search" method="post">
         <div class="row">
             <div class="col-md-12">
-                <div class="msg">${msg}</div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <form:label path="library">Выберите библиотеку:</form:label>
+                            <form:select path="library" cssClass="form-control">
+                                <c:forEach var="library" items="${allLibraries}">
+                                    <c:choose>
+                                        <c:when test="${search.library.equals(library)}">
+                                            <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </form:select>
+                        </div>
+
+                        <div class="form-group">
+                            <form:label path="name">Введите название:</form:label>
+                            <form:input path="name" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="author">Введите автора:</form:label>
+                            <form:input path="author" cssClass="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <form:label path="publisher">Введите издательство:</form:label>
+                            <form:input path="publisher" cssClass="form-control"/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </c:if>
-
-    <div class="row">
-        <div class="col-md-12">
-            <a href="${pageContext.request.contextPath}/admin/library" role="button" class="btn btn-success btn-large">Добавить</a>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-success">Найти</button>
+                <a href="${pageContext.request.contextPath}/admin/books_search" role="button"
+                   class="btn btn-danger">Очистить
+                    результаты поиска</a>
+            </div>
         </div>
-    </div>
+    </form:form>
+
+    <br/>
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -96,30 +135,22 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Название библиотеки</th>
-                            <th>Страна</th>
-                            <th>Город</th>
-                            <th>Улица, номер дома</th>
-                            <th>Телефон</th>
+                            <th>Название</th>
+                            <th>Автор</th>
+                            <th>Издательство</th>
+                            <th>Год издания</th>
+                            <th>Количество страниц</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="library" items="${libraries}">
+                        <c:forEach var="book" items="${search.books}">
                             <tr>
-                                <th scope="row"><c:out value="${library.id}"/></th>
-                                <td><c:out value="${library.name}"/></td>
-                                <td><c:out value="${library.address.country}"/></td>
-                                <td><c:out value="${library.address.city}"/></td>
-                                <td><c:out value="${library.address.street}"/></td>
-                                <td><c:out value="${library.address.phone}"/></td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/admin/library/${library.id}"
-                                       role="button" class="btn btn-warning btn-large">Редактировать</a>
-                                    <button data-id="${library.id}" type="button" class="delete-button-class btn btn-danger btn-large"
-                                            data-toggle="modal"
-                                            data-target=".bs-example-modal-lg">Удалить
-                                    </button>
-                                </td>
+                                <th scope="row"><c:out value="${book.id}"/></th>
+                                <td><c:out value="${book.name}"/></td>
+                                <td><c:out value="${book.author}"/></td>
+                                <td><c:out value="${book.publisher}"/></td>
+                                <td><c:out value="${book.publishYear}"/></td>
+                                <td><c:out value="${book.pages}"/></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -129,14 +160,6 @@
         </div>
     </div>
 </div>
-<input id="currentId" type="hidden">
-<script>
-    $(document).ready(function () {
-        $(".delete-button-class").click(function () {
-            $("#currentId").val($(this).attr('data-id'));
-        });
-    });
-</script>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="row">
@@ -144,28 +167,5 @@
         </div>
     </div>
 </nav>
-
-
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Удаление</h4>
-            </div>
-            <div class="modal-body">
-                <p>Вы действительно хотите удалить библиотеку?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        onclick="window.location.replace('${pageContext.request.contextPath}/admin/libraries/' + $('#currentId').val())"
-                        class="btn btn-danger">Удалить
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>
