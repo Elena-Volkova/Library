@@ -1,5 +1,6 @@
 package com.example.application.server.endpoint;
 
+import com.example.application.server.model.RoleEnum;
 import com.example.application.server.model.action.SearchBooksRequest;
 import com.example.application.server.model.action.SearchBooksResponse;
 import com.example.application.server.model.action.SearchUsersRequest;
@@ -49,6 +50,7 @@ public class SearchEndpoint {
         List<UserDB> users = userDao.findUsersBySearchDTO(request.getSearch());
         response.setSearch(request.getSearch());
         response.getSearch().setUsers(users.stream()
+                .filter(userDB -> userDB.getRole() == RoleEnum.USER)
                 .map(UserBuilderUtil::convertUserDBToUser)
                 .collect(Collectors.toList()));
         if (request.getSearch().getLibrary() != null) {

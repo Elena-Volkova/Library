@@ -21,6 +21,20 @@ public class BookSearchDTO {
     protected String publisher;
     protected List<BookDTO> books;
 
+    public BookSearchDTO() {}
+
+    private BookSearchDTO(Builder builder) {
+        setLibrary(builder.library);
+        setName(builder.name);
+        setAuthor(builder.author);
+        setPublisher(builder.publisher);
+        setBooks(builder.books);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public LibraryDTO getLibrary() {
         return library;
     }
@@ -59,5 +73,45 @@ public class BookSearchDTO {
 
     public void setBooks(List<BookDTO> books) {
         this.books = books;
+    }
+
+    public static final class Builder {
+        private LibraryDTO library;
+        private String name;
+        private String author;
+        private String publisher;
+        private List<BookDTO> books;
+
+        private Builder() {
+        }
+
+        public Builder withLibrary(LibraryDTO val) {
+            library = val;
+            return this;
+        }
+
+        public Builder withName(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder withAuthor(String val) {
+            author = val;
+            return this;
+        }
+
+        public Builder withPublisher(String val) {
+            publisher = val;
+            return this;
+        }
+
+        public Builder withBooks(List<BookDTO> val) {
+            books = val;
+            return this;
+        }
+
+        public BookSearchDTO build() {
+            return new BookSearchDTO(this);
+        }
     }
 }

@@ -43,13 +43,13 @@ public class BookDaoImpl extends AbstractDao implements BookDao {
     @Override
     public List<BookDB> findBooksBySearchDTO(BookSearchDTO search) {
         Criteria criteria = getSession().createCriteria(BookDB.class);
-        if (!search.getName().isEmpty()) {
+        if (search.getName() != null && !search.getName().isEmpty()) {
             criteria.add(Restrictions.eq("name", search.getName()));
         }
-        if (!search.getAuthor().isEmpty()) {
+        if (search.getAuthor() != null && !search.getAuthor().isEmpty()) {
             criteria.add(Restrictions.eq("author", search.getAuthor()));
         }
-        if (!search.getPublisher().isEmpty()) {
+        if (search.getPublisher() != null && !search.getPublisher().isEmpty()) {
             criteria.add(Restrictions.eq("publisher", search.getPublisher()));
         }
         if (search.getLibrary() != null) {

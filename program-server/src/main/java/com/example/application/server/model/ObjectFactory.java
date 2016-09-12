@@ -157,4 +157,28 @@ public class ObjectFactory {
     public SearchBooksResponse createSearchBooksResponse() {
         return new SearchBooksResponse();
     }
+
+    public GetTrackingRequest createGetTrackingRequest() {
+        return new GetTrackingRequest();
+    }
+
+    public GetTrackingResponse createGetTrackingResponse() {
+        return new GetTrackingResponse();
+    }
+
+    public SaveTrackingRequest createSaveTrackingRequest() {
+        return new SaveTrackingRequest();
+    }
+
+    public SaveTrackingResponse createSaveTrackingResponse() {
+        return new SaveTrackingResponse();
+    }
+
+    public UpdateTrackingRequest createUpdateTrackingRequest() {
+        return new UpdateTrackingRequest();
+    }
+
+    public UpdateTrackingResponse createUpdateTrackingResponse() {
+        return new UpdateTrackingResponse();
+    }
 }

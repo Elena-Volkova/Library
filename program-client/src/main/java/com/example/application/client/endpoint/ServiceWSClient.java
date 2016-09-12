@@ -243,4 +243,45 @@ public class ServiceWSClient extends WebServiceGatewaySupport {
                         request,
                         new SoapActionCallback(WEBSERVICE_URL + "/SearchBooksResponse"));
     }
+
+    public GetTrackingResponse getTracking(TrackingDTO tracking) {
+        GetTrackingRequest request = new GetTrackingRequest();
+        request.setTracking(tracking);
+
+        LOGGER.info("Requesting searchBooks books");
+
+        return (GetTrackingResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/GetTrackingResponse"));
+    }
+
+    public UpdateTrackingResponse updateTracking(Long bookId, Long userId) {
+        UpdateTrackingRequest request = new UpdateTrackingRequest();
+        request.setBookId(bookId);
+        request.setUserId(userId);
+
+        LOGGER.info("Requesting update tracking");
+
+        return (UpdateTrackingResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/UpdateTrackingResponse"));
+    }
+
+    public SaveTrackingResponse addTracking(Long bookId, Long userId) {
+        SaveTrackingRequest request = new SaveTrackingRequest();
+        request.setBookId(bookId);
+        request.setUserId(userId);
+
+        LOGGER.info("Requesting update tracking");
+
+        return (SaveTrackingResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(
+                        WEBSERVICE_URL,
+                        request,
+                        new SoapActionCallback(WEBSERVICE_URL + "/SaveTrackingResponse"));
+    }
 }

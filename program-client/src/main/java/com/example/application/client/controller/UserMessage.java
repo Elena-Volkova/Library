@@ -10,7 +10,9 @@ public enum UserMessage {
     USER_DELETED("Пользователь успешно удален!"),
     BOOK_ADDED("Книга успешно добавлена!"),
     BOOK_UPDATED("Книга успешно обновлена!"),
-    BOOK_DELETED("Книга успешно удалена!");
+    BOOK_DELETED("Книга успешно удалена!"),
+    BOOK_RECEIVED("Книга успешно выдана!"),
+    BOOK_RETURNED("Книга успешно возвращена!");
 
     UserMessage(String message) {
         this.message = message;

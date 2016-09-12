@@ -12,7 +12,8 @@ import java.util.Date;
         "dateTo",
         "returned",
         "user",
-        "book"
+        "book",
+        "library"
 })
 public class UserCardDTO {
 
@@ -22,6 +23,7 @@ public class UserCardDTO {
     private Boolean returned;
     private UserDTO user;
     private BookDTO book;
+    private LibraryDTO library;
 
     public UserCardDTO() {
     }
@@ -33,6 +35,7 @@ public class UserCardDTO {
         setReturned(builder.returned);
         setUser(builder.user);
         setBook(builder.book);
+        setLibrary(builder.library);
     }
 
     public static Builder newBuilder() {
@@ -87,6 +90,14 @@ public class UserCardDTO {
         this.book = book;
     }
 
+    public LibraryDTO getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(LibraryDTO library) {
+        this.library = library;
+    }
+
     public static final class Builder {
         private Long id;
         private Date dateFrom;
@@ -94,6 +105,7 @@ public class UserCardDTO {
         private Boolean returned;
         private UserDTO user;
         private BookDTO book;
+        private LibraryDTO library;
 
         private Builder() {
         }
@@ -125,6 +137,11 @@ public class UserCardDTO {
 
         public Builder withBook(BookDTO val) {
             book = val;
+            return this;
+        }
+
+        public Builder withLibrary(LibraryDTO val) {
+            library = val;
             return this;
         }
 

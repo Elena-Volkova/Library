@@ -6,8 +6,9 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "searchBooks", propOrder = {
+@XmlType(name = "tracking", propOrder = {
         "library",
+        "user",
         "name",
         "author",
         "publisher",
@@ -16,12 +17,30 @@ import java.util.List;
 })
 public class TrackingDTO {
 
-    protected LibraryDTO library;
-    protected String name;
-    protected String author;
-    protected String publisher;
-    protected List<BookDTO> books;
-    protected List<UserCardDTO> userCards;
+    private LibraryDTO library;
+    private UserDTO user;
+    private String name;
+    private String author;
+    private String publisher;
+    private List<BookDTO> books;
+    private List<UserCardDTO> userCards;
+
+    public TrackingDTO() {
+    }
+
+    private TrackingDTO(Builder builder) {
+        setLibrary(builder.library);
+        setUser(builder.user);
+        setName(builder.name);
+        setAuthor(builder.author);
+        setPublisher(builder.publisher);
+        setBooks(builder.books);
+        setUserCards(builder.userCards);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
     public LibraryDTO getLibrary() {
         return library;
@@ -29,6 +48,14 @@ public class TrackingDTO {
 
     public void setLibrary(LibraryDTO library) {
         this.library = library;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -69,5 +96,57 @@ public class TrackingDTO {
 
     public void setUserCards(List<UserCardDTO> userCards) {
         this.userCards = userCards;
+    }
+
+    public static final class Builder {
+        private LibraryDTO library;
+        private UserDTO user;
+        private String name;
+        private String author;
+        private String publisher;
+        private List<BookDTO> books;
+        private List<UserCardDTO> userCards;
+
+        private Builder() {
+        }
+
+        public Builder withLibrary(LibraryDTO val) {
+            library = val;
+            return this;
+        }
+
+        public Builder withUser(UserDTO val) {
+            user = val;
+            return this;
+        }
+
+        public Builder withName(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder withAuthor(String val) {
+            author = val;
+            return this;
+        }
+
+        public Builder withPublisher(String val) {
+            publisher = val;
+            return this;
+        }
+
+        public Builder withBooks(List<BookDTO> val) {
+            books = val;
+            return this;
+        }
+
+        public Builder withUserCards(List<UserCardDTO> val) {
+            userCards = val;
+            return this;
+        }
+
+        public TrackingDTO build() {
+            return new TrackingDTO(this);
+        }
     }
 }

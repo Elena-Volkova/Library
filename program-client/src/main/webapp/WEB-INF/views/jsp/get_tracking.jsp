@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,20 +43,11 @@
         <div class="row">
             <div class="col-md-9">
                 <ul class="nav nav-pills">
-                    <c:choose>
-                        <c:when test="${role == 'ADMIN'}">
-                            <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
-                            <li class="active"><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
-                            <li><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="active"><a href="${pageContext.request.contextPath}/user/books_search" role="button" class="">Поиск книг</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/tracking" role="button" class="">Я читаю</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/user" role="button" class="">Мой профиль</a></li>
-                        </c:otherwise>
-                    </c:choose>
+                    <li><a href="${pageContext.request.contextPath}/admin/libraries" role="button" class="">Библиотеки</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/users" role="button" class="">Пользователи</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books" role="button" class="">Книги</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin/books_search" role="button" class="">Поиск книг</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/admin/users_search" role="button" class="">Выдача книг</a></li>
                 </ul>
             </div>
                 <c:url value="/logout" var="logoutUrl"/>
@@ -89,20 +81,12 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
+                        <form:input path="library.id" type="hidden"/>
+                        <form:input path="user.id" type="hidden"/>
+
                         <div class="form-group">
-                            <form:label path="library">Выберите библиотеку:</form:label>
-                            <form:select path="library" cssClass="form-control">
-                                <c:forEach var="library" items="${allLibraries}">
-                                    <c:choose>
-                                        <c:when test="${search.library.equals(library)}">
-                                            <form:option value="${library.id}" selected="true"><c:out value="${library.name}"/></form:option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <form:option value="${library.id}"><c:out value="${library.name}"/></form:option>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </form:select>
+                            <form:label path="library.name">Библиотека:</form:label>
+                            <form:input path="library.name" cssClass="form-control" disabled="true"/>
                         </div>
 
                         <div class="form-group">
@@ -127,7 +111,7 @@
                        name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-success">Найти</button>
-                <a href="${pageContext.request.contextPath}/admin/books_search" role="button"
+                <a href="${pageContext.request.contextPath}/admin/users_search" role="button"
                    class="btn btn-danger">Очистить
                     результаты поиска</a>
             </div>
@@ -135,6 +119,7 @@
     </form:form>
 
     <br/>
+    <div>Выберите книгу</div>
 
     <div class="row">
         <div class="col-md-12">
@@ -153,7 +138,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="book" items="${search.books}">
+                        <c:forEach var="book" items="${tracking.books}">
                             <tr>
                                 <th scope="row"><c:out value="${book.id}"/></th>
                                 <td><c:out value="${book.name}"/></td>
@@ -169,6 +154,59 @@
                                         Нет
                                     </c:otherwise>
                                 </c:choose></td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/admin/tracking/library/${tracking.library.id}/book/${book.id}/user/${tracking.user.id}"
+                                       role="button" class="btn btn-warning btn-large">Выдать книгу</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <div>Карта книг пользователя</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Книга</th>
+                            <th>Автор</th>
+                            <th>Издательство</th>
+                            <th>Дата выдачи</th>
+                            <th>Дата возврата</th>
+                            <th>Возвращена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="userCard" items="${tracking.userCards}">
+                            <tr>
+                                <th scope="row"><c:out value="${userCard.id}"/></th>
+                                <td><c:out value="${userCard.book.name}"/></td>
+                                <td><c:out value="${userCard.book.author}"/></td>
+                                <td><c:out value="${userCard.book.publisher}"/></td>
+                                <td><fmt:formatDate pattern="dd-MM-yyyy" value="${userCard.dateFrom}"/></td>
+                                <td><fmt:formatDate pattern="dd-MM-yyyy" value="${userCard.dateTo}"/></td>
+                                <td><c:choose>
+                                    <c:when test="${userCard.returned}">
+                                        Да
+                                    </c:when>
+                                    <c:otherwise>
+                                        Нет
+                                    </c:otherwise>
+                                </c:choose></td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/admin/tracking/library/${tracking.library.id}/book/${userCard.book.id}/user/${tracking.user.id}/return"
+                                       role="button" class="btn btn-warning btn-large">Вернуть книгу</a>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
